@@ -1,1 +1,23 @@
-node_modules
+# dependency folders
+node_modules/
+
+# environment files
+.env
+.env.*
+
+# logs
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# OS files
+.DS_Store
+
+# build outputs
+dist/
+build/
+coverage/
+
+# editor files
+.vscode/
+.idea/
