@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import pool from "./config/db.js";
+import authRoutes from "./routes/authRoutes.js";
 
 const app = express();
 
@@ -12,6 +13,8 @@ app.get("/", (req, res) => {
     message: "Agri Advisory API is running",
   });
 });
+
+app.use("/api/auth", authRoutes);
 
 //testing db connection
 app.get("/test-db", async (req, res) => {
@@ -26,5 +29,7 @@ app.get("/test-db", async (req, res) => {
     res.status(500).json({ error: "Database connection failed" });
   }
 });
+
+
 
 export default app;

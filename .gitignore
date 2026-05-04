@@ -21,3 +21,6 @@ coverage/
 # editor files
 .vscode/
 .idea/
+
+tsconfig.json
+eslint.config.js
