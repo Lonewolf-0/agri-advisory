@@ -15,6 +15,10 @@ export function generateAdvisory(weather) {
     );
   }
 
+  if (temperature < 0) {
+    advice.push("Very low Temperature, cannot farm");
+  }
+
   // pesticide spraying
   if (windSpeed > 12) {
     advice.push("Wind speed is high. Avoid pesticide spraying.");
