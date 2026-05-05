@@ -1,10 +1,18 @@
 import { fetchWeather } from "../services/weatherService.js";
+import { generateAdvisory } from "../rules/advisoryRules.js";
 
-export async function getWeather(req, res) {
+export async function getAdvisory(req, res) {
   try {
     const { lat, lon } = req.query;
+
     const weather = await fetchWeather(lat, lon);
-    res.json(weather);
+
+    const advisory = generateAdvisory(weather);
+
+    res.json({
+      weather,
+      advisory,
+    });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
