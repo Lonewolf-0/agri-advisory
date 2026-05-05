@@ -13,7 +13,8 @@ export async function getCrops(req, res) {
 
 export async function addLocation(req, res) {
   try {
-    const { userId, latitude, longitude, district, state } = req.body;
+    const userId = req.user.id;
+    const { latitude, longitude, district, state } = req.body;
 
     const location = await saveLocation(
       userId,
@@ -34,7 +35,8 @@ export async function addLocation(req, res) {
 
 export async function chooseCrop(req, res) {
   try {
-    const { userId, cropId } = req.body;
+    const userId = req.body.id;
+    const { cropId } = req.body;
 
     const crop = await selectCrop(userId, cropId);
 

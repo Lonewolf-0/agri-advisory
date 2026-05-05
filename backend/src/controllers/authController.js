@@ -2,8 +2,6 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { createUser, findUserByEmail } from "../models/userModel.js";
 
-const SECRET = "secretkey";
-
 //register user
 async function register(req, res) {
   try {
@@ -32,9 +30,9 @@ async function login(req, res) {
     if (!match) {
       return res.status(401).json({ message: "Invalid Credentials" });
     }
-    const token = await jwt.sign(
-      { userId: user._id, email: user.email },
-      SECRET,
+    const token = jwt.sign(
+      { id: user.id, email: user.email },
+      process.env.JWT_SECRET,
       { expiresIn: "1d" },
     );
 

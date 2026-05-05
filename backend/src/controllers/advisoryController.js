@@ -4,8 +4,8 @@ import { getUserCrop } from "../models/userCropModel.js";
 
 export async function getAdvisory(req, res) {
   try {
-
-    const { lat, lon, userId } = req.query;
+    const userId = req.user.id;
+    const { lat, lon } = req.query;
 
     const weather = await fetchWeather(lat, lon);
 
@@ -18,9 +18,8 @@ export async function getAdvisory(req, res) {
     res.json({
       crop: cropName,
       weather,
-      advisory
+      advisory,
     });
-
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
