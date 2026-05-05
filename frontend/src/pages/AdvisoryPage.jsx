@@ -9,7 +9,13 @@ function AdvisoryPage() {
   const [weather, setWeather] = useState(null);
 
   const getAdvisory = async () => {
-    const res = await api.get(`/advisory?lat=${lat}&lon=${lon}`);
+    const userId = 1; // temporary
+
+    const res = await api.get(
+      `/advisory?lat=${lat}&lon=${lon}&userId=${userId}`,
+    );
+    
+    // const res = await api.get(`/advisory?lat=${lat}&lon=${lon}`);
 
     setAdvisory(res.data.advisory);
     setWeather(res.data.weather);
