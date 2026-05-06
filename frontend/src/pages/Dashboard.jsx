@@ -10,6 +10,7 @@ import api from "../services/api";
 function Dashboard() {
   const [lat, setLat] = useState(null);
   const [lon, setLon] = useState(null);
+  const [reloadLocations, setReloadLocations] = useState(false);
 
   const handleLocationSelect = (location) => {
     setLat(location.latitude);
@@ -29,8 +30,11 @@ function Dashboard() {
       });
 
       alert("Farm location saved");
+
+      // trigger list refresh
+      setReloadLocations(!reloadLocations);
     } catch (err) {
-      console.error(err.message);
+      console.error(err);
       alert("Failed to save location");
     }
   };
@@ -46,13 +50,16 @@ function Dashboard() {
       <h3>Select Farm Location</h3>
 
       <WeatherMap lat={lat} lon={lon} setLat={setLat} setLon={setLon} />
-      <p>Selected Location:</p>
+
       <p>Latitude: {lat}</p>
       <p>Longitude: {lon}</p>
 
       <button onClick={saveLocation}>Save Farm Location</button>
 
-      <LocationList onSelectLocation={handleLocationSelect} />
+      <LocationList
+        onSelectLocation={handleLocationSelect}
+        reloadTrigger={reloadLocations}
+      />
 
       <AdvisoryPage lat={lat} lon={lon} />
     </div>

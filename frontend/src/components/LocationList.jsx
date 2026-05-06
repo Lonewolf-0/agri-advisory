@@ -1,18 +1,19 @@
 import { useEffect, useState } from "react";
 import api from "../services/api";
 
-function LocationList({ onSelectLocation }) {
+function LocationList({ onSelectLocation, reloadTrigger }) {
   const [locations, setLocations] = useState([]);
 
+  const fetchLocations = async () => {
+    const res = await api.get("/farm/locations");
+
+    setLocations(res.data);
+  };
+
   useEffect(() => {
-    async function fetchLocations() {
-      const res = await api.get("/farm/locations");
-
-      setLocations(res.data);
-    }
-
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     fetchLocations();
-  }, []);
+  }, [reloadTrigger]);
 
   return (
     <div>
