@@ -8,13 +8,22 @@ function AdvisoryPage() {
   const [advisory, setAdvisory] = useState([]);
   const [weather, setWeather] = useState(null);
 
+  const saveLocation = async () => {
+    await api.post("/farm/location", {
+      latitude: lat,
+      longitude: lon,
+    });
+
+    alert("Location saved");
+  };
+
   const getAdvisory = async () => {
     const userId = 1; // temporary
 
     const res = await api.get(
       `/advisory?lat=${lat}&lon=${lon}&userId=${userId}`,
     );
-    
+
     // const res = await api.get(`/advisory?lat=${lat}&lon=${lon}`);
 
     setAdvisory(res.data.advisory);
@@ -31,6 +40,7 @@ function AdvisoryPage() {
       <p>Longitude: {lon}</p>
 
       <button onClick={getAdvisory}>Get Advisory</button>
+      <button onClick={saveLocation}>Save Farm Location</button>
 
       {weather && (
         <div>
