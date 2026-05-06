@@ -14,15 +14,12 @@ export async function getCrops(req, res) {
 
 export async function chooseCrop(req, res) {
   try {
-    const userId = req.body.id;
+    const userId = req.user.id;
     const { cropId } = req.body;
 
     const crop = await selectCrop(userId, cropId);
 
-    res.json({
-      message: "Crop selected",
-      crop,
-    });
+    res.json({ message: "Crop selected", crop });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -45,25 +42,31 @@ export async function addLocation(req, res) {
     const userId = req.user.id;
     const { latitude, longitude } = req.body;
 
-    console.log(1);
-    const geo = await axios.get(
-      `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`,
-    );
-    console.log(geo);
-    const address = geo.data.address;
+    if (latitude === undefined || longitude === undefined) {
+      return res.status(400).json({ error: "latitude and longitude are required" });
+    }
 
-    const district =
-      address.county || address.city_district || address.city || "";
+    const lat = parseFloat(latitude);
+    const lon = parseFloat(longitude);
+    if (Number.isNaN(lat) || Number.isNaN(lon)) {
+      return res.status(400).json({ error: "invalid latitude or longitude" });
+    }
 
+    const geoUrl = `https://nominatim.openstreetmap.org/reverse?lat=${encodeURIComponent(
+      lat,
+    )}&lon=${encodeURIComponent(lon)}&format=json`;
+    const geo = await axios.get(geoUrl, {
+      headers: {
+        "User-Agent": "aryan-app",
+      },
+    });
+
+    const address = geo?.data?.address || {};
+
+    const district = address.county || address.city_district || address.city || "";
     const state = address.state || "";
 
-    const location = await saveLocation(
-      userId,
-      latitude,
-      longitude,
-      district,
-      state,
-    );
+    const location = await saveLocation(userId, lat, lon, district, state);
 
     res.json(location);
   } catch (err) {
