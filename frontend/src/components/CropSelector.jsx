@@ -15,7 +15,6 @@ function CropSelector() {
     fetchCrops();
   }, []);
 
-
   return (
     <div>
       <h3>Select Crop</h3>
@@ -32,8 +31,6 @@ function CropSelector() {
           </option>
         ))}
       </select>
-
-    
     </div>
   );
 }

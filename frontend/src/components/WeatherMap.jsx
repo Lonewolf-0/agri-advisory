@@ -12,18 +12,16 @@ function LocationMarker({ setLat, setLon }) {
 
       setLat(lat);
       setLon(lng);
-    }
+    },
   });
 
-  return position === null ? null : (
-    <Marker position={position}></Marker>
-  );
+  return position === null ? null : <Marker position={position}></Marker>;
 }
 
 function WeatherMap({ setLat, setLon }) {
   return (
     <MapContainer
-      center={[20.5937, 78.9629]} // center of India
+      center={[20.5937, 78.9629]}
       zoom={5}
       style={{ height: "400px", width: "100%" }}
     >
@@ -33,7 +31,6 @@ function WeatherMap({ setLat, setLon }) {
       />
 
       <LocationMarker setLat={setLat} setLon={setLon} />
-
     </MapContainer>
   );
 }

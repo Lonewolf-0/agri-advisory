@@ -1,57 +1,35 @@
 import { useState } from "react";
 import api from "../services/api";
-import WeatherMap from "../components/WeatherMap";
 
-function AdvisoryPage() {
-  const [lat, setLat] = useState("");
-  const [lon, setLon] = useState("");
-  const [advisory, setAdvisory] = useState([]);
+function AdvisoryPage({ lat, lon }) {
   const [weather, setWeather] = useState(null);
-
-  const saveLocation = async () => {
-    await api.post("/farm/location", {
-      latitude: lat,
-      longitude: lon,
-    });
-
-    alert("Location saved");
-  };
+  const [advisory, setAdvisory] = useState([]);
 
   const getAdvisory = async () => {
-    const userId = 1; // temporary
+    if (!lat || !lon) {
+      alert("Please select a farm location");
+      return;
+    }
 
-    const res = await api.get(
-      `/advisory?lat=${lat}&lon=${lon}&userId=${userId}`,
-    );
+    const res = await api.get(`/advisory?lat=${lat}&lon=${lon}`);
 
-    // const res = await api.get(`/advisory?lat=${lat}&lon=${lon}`);
-
-    setAdvisory(res.data.advisory);
     setWeather(res.data.weather);
+    setAdvisory(res.data.advisory);
   };
 
   return (
     <div>
-      <h2>Select Farm Location</h2>
+      <h3>Farm Advisory</h3>
 
-      <WeatherMap setLat={setLat} setLon={setLon} />
-
-      <p>Latitude: {lat}</p>
-      <p>Longitude: {lon}</p>
-
-      <button onClick={getAdvisory}>Get Advisory</button>
-      <button onClick={saveLocation}>Save Farm Location</button>
+      <button onClick={getAdvisory}>Generate Advisory</button>
 
       {weather && (
         <div>
-          <h3>Weather</h3>
           <p>Temperature: {weather.temperature} °C</p>
           <p>Humidity: {weather.humidity} %</p>
-          <p>Wind: {weather.windSpeed} km/h</p>
+          <p>Wind Speed: {weather.windSpeed}</p>
         </div>
       )}
-
-      <h3>Advisory</h3>
 
       <ul>
         {advisory.map((a, index) => (
