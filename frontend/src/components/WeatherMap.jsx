@@ -1,28 +1,25 @@
 import { MapContainer, TileLayer, Marker, useMapEvents } from "react-leaflet";
-import { useState } from "react";
 
-function LocationMarker({ setLat, setLon }) {
-  const [position, setPosition] = useState(null);
-
+function MapClickHandler({ setLat, setLon }) {
   useMapEvents({
     click(e) {
       const { lat, lng } = e.latlng;
-
-      setPosition([lat, lng]);
 
       setLat(lat);
       setLon(lng);
     },
   });
 
-  return position === null ? null : <Marker position={position}></Marker>;
+  return null;
 }
 
-function WeatherMap({ setLat, setLon }) {
+function WeatherMap({ lat, lon, setLat, setLon }) {
+  const position = lat && lon ? [lat, lon] : [20.5937, 78.9629];
+
   return (
     <MapContainer
-      center={[20.5937, 78.9629]}
-      zoom={5}
+      center={position}
+      zoom={lat ? 10 : 5}
       style={{ height: "400px", width: "100%" }}
     >
       <TileLayer
@@ -30,7 +27,9 @@ function WeatherMap({ setLat, setLon }) {
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
 
-      <LocationMarker setLat={setLat} setLon={setLon} />
+      <MapClickHandler setLat={setLat} setLon={setLon} />
+
+      {lat && lon && <Marker position={[lat, lon]} />}
     </MapContainer>
   );
 }

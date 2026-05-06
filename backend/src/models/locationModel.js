@@ -9,7 +9,8 @@ export async function saveLocation(
 ) {
   const result = await pool.query(
     `INSERT INTO locations (user_id, latitude, longitude, district, state)
-     VALUES ($1,$2,$3,$4,$5) RETURNING *`,
+     VALUES ($1,$2,$3,$4,$5)
+     RETURNING *`,
     [userId, latitude, longitude, district, state],
   );
 
@@ -19,7 +20,7 @@ export async function saveLocation(
 export async function getUserLocations(userId) {
   const result = await pool.query(
     `SELECT * FROM locations
-     WHERE user_id = $1
+     WHERE user_id=$1
      ORDER BY created_at DESC`,
     [userId],
   );

@@ -11,9 +11,9 @@ function Dashboard() {
   const [lat, setLat] = useState(null);
   const [lon, setLon] = useState(null);
 
-  const handleLocationSelect = (latitude, longitude) => {
-    setLat(latitude);
-    setLon(longitude);
+  const handleLocationSelect = (location) => {
+    setLat(location.latitude);
+    setLon(location.longitude);
   };
 
   const saveLocation = async () => {
@@ -45,8 +45,7 @@ function Dashboard() {
 
       <h3>Select Farm Location</h3>
 
-      <WeatherMap setLat={setLat} setLon={setLon} />
-
+      <WeatherMap lat={lat} lon={lon} setLat={setLat} setLon={setLon} />
       <p>Selected Location:</p>
       <p>Latitude: {lat}</p>
       <p>Longitude: {lon}</p>

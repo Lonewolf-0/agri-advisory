@@ -23,8 +23,10 @@ function LocationList({ onSelectLocation }) {
           <li
             key={loc.id}
             style={{ cursor: "pointer", marginBottom: "10px" }}
-            onClick={() => onSelectLocation(loc.latitude, loc.longitude)}
+            onClick={() => onSelectLocation(loc)}
           >
+            {loc.district}, {loc.state}
+            <br />
             Lat: {loc.latitude} | Lon: {loc.longitude}
           </li>
         ))}
