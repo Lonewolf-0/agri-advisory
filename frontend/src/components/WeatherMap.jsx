@@ -20,7 +20,7 @@ function WeatherMap({ lat, lon, setLat, setLon }) {
     <MapContainer
       center={position}
       zoom={lat ? 10 : 5}
-      style={{ height: "400px", width: "100%" }}
+      style={{ height: "600px", width: "100%" }}
     >
       <TileLayer
         attribution="OpenStreetMap"

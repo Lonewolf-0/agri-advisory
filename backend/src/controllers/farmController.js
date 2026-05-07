@@ -43,7 +43,9 @@ export async function addLocation(req, res) {
     const { latitude, longitude } = req.body;
 
     if (latitude === undefined || longitude === undefined) {
-      return res.status(400).json({ error: "latitude and longitude are required" });
+      return res
+        .status(400)
+        .json({ error: "latitude and longitude are required" });
     }
 
     const lat = parseFloat(latitude);
@@ -51,25 +53,28 @@ export async function addLocation(req, res) {
     if (Number.isNaN(lat) || Number.isNaN(lon)) {
       return res.status(400).json({ error: "invalid latitude or longitude" });
     }
-
     const geoUrl = `https://nominatim.openstreetmap.org/reverse?lat=${encodeURIComponent(
       lat,
     )}&lon=${encodeURIComponent(lon)}&format=json`;
+    console.log("before api call");
     const geo = await axios.get(geoUrl, {
       headers: {
         "User-Agent": "aryan-app",
       },
     });
+    console.log("after api call");
 
     const address = geo?.data?.address || {};
 
-    const district = address.county || address.city_district || address.city || "";
+    const district =
+      address.county || address.city_district || address.city || "";
     const state = address.state || "";
 
     const location = await saveLocation(userId, lat, lon, district, state);
 
     res.json(location);
   } catch (err) {
+    console.log(err);
     res.status(500).json({ error: err.message });
   }
 }

@@ -23,7 +23,7 @@ function LocationList({ onSelectLocation, reloadTrigger }) {
         {locations.map((loc) => (
           <li
             key={loc.id}
-            style={{ cursor: "pointer", marginBottom: "10px" }}
+            style={{ color: "blue", cursor: "pointer", marginBottom: "10px" }}
             onClick={() => onSelectLocation(loc)}
           >
             {loc.district}, {loc.state}
