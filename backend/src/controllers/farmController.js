@@ -2,6 +2,7 @@ import { getAllCrops } from "../models/cropModel.js";
 import { saveLocation, getUserLocations } from "../models/locationModel.js";
 import { selectCrop } from "../models/userCropModel.js";
 import axios from "axios";
+import https from "https";
 
 export async function getCrops(req, res) {
   try {
@@ -57,10 +58,14 @@ export async function addLocation(req, res) {
       lat,
     )}&lon=${encodeURIComponent(lon)}&format=json`;
     console.log("before api call");
+    const httpsAgent = new https.Agent({
+      rejectUnauthorized: false,
+    });
     const geo = await axios.get(geoUrl, {
       headers: {
         "User-Agent": "aryan-app",
       },
+      httpsAgent,
     });
     console.log("after api call");
 
@@ -74,7 +79,7 @@ export async function addLocation(req, res) {
 
     res.json(location);
   } catch (err) {
-    console.log(err);
+    console.log(err.message);
     res.status(500).json({ error: err.message });
   }
 }
