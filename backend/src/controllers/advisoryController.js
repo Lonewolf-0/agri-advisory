@@ -1,5 +1,5 @@
 import { fetchWeather } from "../services/weatherService.js";
-import { generateAdvisory } from "../rules/advisoryRules.js";
+import { generateAdvisory } from "../services/advisoryEngine.js";
 import { getUserCrop } from "../models/userCropModel.js";
 
 export async function getAdvisory(req, res) {

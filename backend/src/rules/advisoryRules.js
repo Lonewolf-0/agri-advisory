@@ -1,54 +1,100 @@
-export function generateAdvisory(weather, crop) {
+export const advisoryRules = [
+  // -------- General Weather Rules --------
 
-  const advice = [];
+  {
+    crop: "ALL",
+    condition: (weather) => weather.rainProbability > 70,
+    message: "Heavy rain likely. Avoid irrigation and fertilizer application.",
+  },
 
-  const { temperature, humidity, windSpeed, rainProbability } = weather;
+  {
+    crop: "ALL",
+    condition: (weather) =>
+      weather.rainProbability > 40 && weather.rainProbability <= 70,
+    message: "Moderate rain expected. Monitor soil moisture before irrigation.",
+  },
 
-  // General rules
-  if (rainProbability > 60) {
-    advice.push("High chance of rain. Skip irrigation today.");
-  }
+  {
+    crop: "ALL",
+    condition: (weather) => weather.windSpeed > 15,
+    message: "Strong winds detected. Avoid pesticide spraying.",
+  },
 
-  if (windSpeed > 12) {
-    advice.push("Wind speed is high. Avoid pesticide spraying.");
-  }
+  {
+    crop: "ALL",
+    condition: (weather) => weather.windSpeed > 8 && weather.windSpeed <= 15,
+    message: "Moderate winds. Spray carefully to avoid drift.",
+  },
 
-  // Crop specific rules
-  if (crop === "Rice") {
+  {
+    crop: "ALL",
+    condition: (weather) => weather.temperature > 38,
+    message: "Extreme heat conditions. Ensure proper irrigation.",
+  },
 
-    if (humidity > 85) {
-      advice.push("High humidity may increase risk of rice blast disease.");
-    }
+  {
+    crop: "ALL",
+    condition: (weather) => weather.humidity > 90,
+    message: "Very high humidity may increase fungal disease risk.",
+  },
 
-    if (temperature > 35) {
-      advice.push("High temperature stress for rice. Ensure adequate water.");
-    }
+  // -------- Rice Rules --------
 
-  }
+  {
+    crop: "Rice",
+    condition: (weather) => weather.humidity > 85 && weather.temperature > 28,
+    message: "Conditions favor rice blast disease. Inspect leaves.",
+  },
 
-  if (crop === "Wheat") {
+  {
+    crop: "Rice",
+    condition: (weather) => weather.temperature > 35,
+    message: "High temperature stress for rice. Maintain field water levels.",
+  },
 
-    if (temperature < 10) {
-      advice.push("Low temperature may cause frost damage in wheat.");
-    }
+  {
+    crop: "Rice",
+    condition: (weather) => weather.rainProbability > 60,
+    message: "Rain expected. Delay irrigation in paddy fields.",
+  },
 
-    if (humidity > 80) {
-      advice.push("High humidity increases wheat rust disease risk.");
-    }
+  // -------- Wheat Rules --------
 
-  }
+  {
+    crop: "Wheat",
+    condition: (weather) => weather.temperature < 8,
+    message: "Frost risk for wheat. Consider protective irrigation.",
+  },
 
-  if (crop === "Maize") {
+  {
+    crop: "Wheat",
+    condition: (weather) => weather.humidity > 80 && weather.temperature > 15,
+    message: "Conditions favor wheat rust disease.",
+  },
 
-    if (temperature > 34) {
-      advice.push("High temperature stress for maize. Consider irrigation.");
-    }
+  {
+    crop: "Wheat",
+    condition: (weather) => weather.temperature > 32,
+    message: "High temperature may affect wheat grain filling.",
+  },
 
-  }
+  // -------- Maize Rules --------
 
-  if (advice.length === 0) {
-    advice.push("Weather conditions look normal for this crop.");
-  }
+  {
+    crop: "Maize",
+    condition: (weather) => weather.temperature > 34,
+    message: "Heat stress for maize. Ensure adequate irrigation.",
+  },
 
-  return advice;
-}
+  {
+    crop: "Maize",
+    condition: (weather) => weather.humidity > 85,
+    message: "High humidity may promote maize fungal diseases.",
+  },
+
+  {
+    crop: "Maize",
+    condition: (weather) => weather.rainProbability > 65,
+    message: "Heavy rainfall possible. Check drainage to prevent waterlogging.",
+  },
+];
