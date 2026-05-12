@@ -4,23 +4,31 @@ import { getUserCrop } from "../models/userCropModel.js";
 
 export async function getAdvisory(req, res) {
   try {
-    const userId = req.user.id;
     const { lat, lon } = req.query;
 
-    const weather = await fetchWeather(lat, lon);
+    const userId = req.user.id;
 
     const cropData = await getUserCrop(userId);
 
-    const cropName = cropData ? cropData.name : null;
+    const crop = cropData?.name;
 
-    const advisory = generateAdvisory(weather, cropName);
+    const forecast = await fetchWeather(lat, lon);
+
+    const advisoryForecast = forecast.map((day) => {
+      const advisory = generateAdvisory(day, crop);
+
+      return {
+        date: day.date,
+        weather: day,
+        advisory,
+      };
+    });
 
     res.json({
-      crop: cropName,
-      weather,
-      advisory,
+      crop,
+      forecast: advisoryForecast,
     });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
   }
 }

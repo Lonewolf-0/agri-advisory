@@ -24,3 +24,4 @@ coverage/
 
 tsconfig.json
 eslint.config.js
+.prettierrc
