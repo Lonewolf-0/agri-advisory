@@ -21,10 +21,10 @@ function MapClickHandler({ setLat, setLon, setPopupData }) {
 
       try {
         const res = await api.get(`/weather?lat=${lat}&lon=${lng}`);
-
+        // console.log(res.data);
         setPopupData({
           position: [lat, lng],
-          weather: res.data,
+          weather: res.data[0],
         });
       } catch (err) {
         console.error("Weather fetch failed", err);
@@ -136,7 +136,11 @@ function WeatherMap({ lat, lon, setLat, setLon }) {
 
         <WindLayer enabled={layer === "wind"} />
 
-        <MapClickHandler setLat={setLat} setLon={setLon} setPopupData={setPopupData} />
+        <MapClickHandler
+          setLat={setLat}
+          setLon={setLon}
+          setPopupData={setPopupData}
+        />
 
         {lat && lon && <Marker position={[lat, lon]} />}
 
