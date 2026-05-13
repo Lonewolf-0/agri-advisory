@@ -2,18 +2,33 @@ import {
   MapContainer,
   TileLayer,
   Marker,
+  Popup,
   useMap,
   useMapEvents,
 } from "react-leaflet";
 import { useEffect, useRef, useState } from "react";
 import L from "leaflet";
 import "leaflet-velocity";
+import api from "../services/api";
 
-function MapClickHandler({ setLat, setLon }) {
+function MapClickHandler({ setLat, setLon, setPopupData }) {
   useMapEvents({
-    click(e) {
-      setLat(e.latlng.lat);
-      setLon(e.latlng.lng);
+    async click(e) {
+      const { lat, lng } = e.latlng;
+
+      setLat(lat);
+      setLon(lng);
+
+      try {
+        const res = await api.get(`/weather?lat=${lat}&lon=${lng}`);
+
+        setPopupData({
+          position: [lat, lng],
+          weather: res.data,
+        });
+      } catch (err) {
+        console.error("Weather fetch failed", err);
+      }
     },
   });
 
@@ -76,6 +91,7 @@ function WindLayer({ enabled }) {
 
 function WeatherMap({ lat, lon, setLat, setLon }) {
   const [layer, setLayer] = useState("none");
+  const [popupData, setPopupData] = useState(null);
 
   const apiKey = import.meta.env.VITE_WEATHER_API_KEY;
 
@@ -120,9 +136,25 @@ function WeatherMap({ lat, lon, setLat, setLon }) {
 
         <WindLayer enabled={layer === "wind"} />
 
-        <MapClickHandler setLat={setLat} setLon={setLon} />
+        <MapClickHandler setLat={setLat} setLon={setLon} setPopupData={setPopupData} />
 
         {lat && lon && <Marker position={[lat, lon]} />}
+
+        {popupData && (
+          <Popup
+            position={popupData.position}
+            onClose={() => setPopupData(null)}
+          >
+            <div>
+              <strong>Weather Details</strong>
+
+              <p>Temperature: {popupData.weather.temperature} °C</p>
+              <p>Humidity: {popupData.weather.humidity} %</p>
+              <p>Wind Speed: {popupData.weather.windSpeed} m/s</p>
+              <p>Rain Probability: {popupData.weather.rainProbability} %</p>
+            </div>
+          </Popup>
+        )}
       </MapContainer>
     </div>
   );
