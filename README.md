@@ -158,6 +158,22 @@ Frontend automatically attaches token from `localStorage`.
   - Ensure backend is running on `http://localhost:5000`.
   - Confirm frontend Axios base URL in `frontend/src/services/api.js`.
 
+## Testing
+
+Run the automated tests from each app folder:
+
+```bash
+cd backend && npm test
+cd frontend && npm test
+```
+
+For watch mode:
+
+```bash
+cd backend && npm run test:watch
+cd frontend && npm run test:watch
+```
+
 ## Notes
 
 - Current API has no automated tests configured.
