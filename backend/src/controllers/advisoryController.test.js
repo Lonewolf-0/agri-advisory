@@ -12,6 +12,10 @@ vi.mock("../models/userCropModel.js", () => ({
   getUserCrop: vi.fn(),
 }));
 
+vi.mock("../models/logModel.js", () => ({
+  saveAdvisoryLog: vi.fn(),
+}));
+
 const { fetchWeather } = await import("../services/weatherService.js");
 const { generateAdvisory } = await import("../services/advisoryEngine.js");
 const { getUserCrop } = await import("../models/userCropModel.js");
