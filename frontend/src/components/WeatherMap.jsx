@@ -89,9 +89,81 @@ function WindLayer({ enabled }) {
   return null;
 }
 
+function RecenterMap({ lat, lon }) {
+  const map = useMap();
+
+  useEffect(() => {
+    if (lat && lon) {
+      map.setView([lat, lon]);
+    }
+  }, [lat, lon, map]);
+
+  return null;
+}
+
+// detectLocation moved into WeatherMap to access setLat/setLon
+
 function WeatherMap({ lat, lon, setLat, setLon }) {
   const [layer, setLayer] = useState("none");
   const [popupData, setPopupData] = useState(null);
+  const [locating, setLocating] = useState(false);
+
+  const detectLocation = async () => {
+    if (!navigator.geolocation) {
+      alert("Geolocation is not supported by your browser");
+      return;
+    }
+
+    setLocating(true);
+
+    const getPosition = () =>
+      new Promise((resolve, reject) =>
+        navigator.geolocation.getCurrentPosition(resolve, reject, {
+          enableHighAccuracy: true,
+          timeout: 10000,
+          maximumAge: 0,
+        }),
+      );
+
+    try {
+      const position = await getPosition();
+      const userLat = position.coords.latitude;
+      const userLon = position.coords.longitude;
+
+      setLat(userLat);
+      setLon(userLon);
+    } catch (err) {
+      console.warn("Geolocation failed:", err);
+
+      if (err && err.code === 1) {
+        alert(
+          "Location access denied. Please allow location access in your browser.",
+        );
+      } else {
+        // Fallback: try IP-based lookup
+        try {
+          const res = await fetch("https://ipapi.co/json/");
+          if (res.ok) {
+            const data = await res.json();
+            const userLat = Number(data.latitude);
+            const userLon = Number(data.longitude);
+            if (!Number.isNaN(userLat) && !Number.isNaN(userLon)) {
+              setLat(userLat);
+              setLon(userLon);
+              setLocating(false);
+              return;
+            }
+          }
+        } catch (e) {
+          console.warn("IP fallback failed:", e);
+        }
+
+        alert("Unable to determine your location.");
+      }
+    } finally {
+      setLocating(false);
+    }
+  };
 
   const apiKey = import.meta.env.VITE_WEATHER_API_KEY;
 
@@ -112,11 +184,17 @@ function WeatherMap({ lat, lon, setLat, setLon }) {
         <button onClick={() => setLayer("wind")}>Wind</button>
       </div>
 
+      <button onClick={detectLocation} disabled={locating}>
+        {locating ? "Locating..." : "Use Current Location"}
+      </button>
+
       <MapContainer
         center={position}
         zoom={lat ? 10 : 5}
         style={{ height: "600px", width: "100%" }}
       >
+        <RecenterMap lat={lat} lon={lon} />
+
         <TileLayer
           attribution="OpenStreetMap"
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
