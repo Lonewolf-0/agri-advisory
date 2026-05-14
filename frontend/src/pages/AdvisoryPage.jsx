@@ -1,5 +1,7 @@
 import { useState } from "react";
 import api from "../services/api";
+import Papa from "papaparse";
+import jsPDF from "jspdf";
 
 function AdvisoryPage({ lat, lon }) {
   const [forecast, setForecast] = useState([]);
@@ -20,11 +22,85 @@ function AdvisoryPage({ lat, lon }) {
     }
   };
 
+  const exportPDF = () => {
+    const doc = new jsPDF();
+
+    doc.text("Farm Weather & Advisory Report", 10, 10);
+
+    let y = 20;
+
+    forecast.forEach((day) => {
+      doc.text(`Date: ${new Date(day.date).toDateString()}`, 10, y);
+      y += 6;
+
+      doc.text(`Temperature: ${day.weather.temperature} °C`, 10, y);
+      y += 6;
+
+      doc.text(`Humidity: ${day.weather.humidity}%`, 10, y);
+      y += 6;
+
+      doc.text(`Wind Speed: ${day.weather.windSpeed}`, 10, y);
+      y += 6;
+
+      doc.text(`Rain Probability: ${day.weather.rainProbability}%`, 10, y);
+      y += 6;
+
+      doc.text("Advisory:", 10, y);
+      y += 6;
+
+      day.advisory.forEach((a) => {
+        doc.text(`- ${a}`, 10, y);
+        y += 6;
+      });
+
+      y += 6;
+    });
+
+    doc.text(`Generated: ${new Date().toLocaleString()}`, 10, y + 10);
+
+    doc.save("farm-advisory-report.pdf");
+  };
+
+  const exportCSV = () => {
+    const rows = [];
+
+    forecast.forEach((day) => {
+      day.advisory.forEach((advice) => {
+        rows.push({
+          date: new Date(day.date).toDateString(),
+          temperature: day.weather.temperature,
+          humidity: day.weather.humidity,
+          windSpeed: day.weather.windSpeed,
+          rainProbability: day.weather.rainProbability,
+          advisory: advice,
+          generatedAt: new Date().toLocaleString(),
+        });
+      });
+    });
+
+    const csv = Papa.unparse(rows);
+
+    const blob = new Blob([csv], { type: "text/csv" });
+
+    const url = window.URL.createObjectURL(blob);
+
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "farm-advisory-report.csv";
+    a.click();
+  };
+
   return (
     <div>
       <h3>5 Day Farm Advisory</h3>
 
       <button onClick={getAdvisory}>Generate Advisory</button>
+      {forecast.length > 0 && (
+        <>
+          <button onClick={exportPDF}>Export PDF</button>
+          <button onClick={exportCSV}>Export CSV</button>
+        </>
+      )}
 
       <div style={{ marginTop: "20px" }}>
         {forecast.map((day, index) => (
