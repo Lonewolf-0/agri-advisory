@@ -1,13 +1,27 @@
 .auth-page {
+  position: relative;
   min-height: 100svh;
   display: grid;
   place-items: center;
   padding: 24px;
   box-sizing: border-box;
-  background:
-    url("./public/images/9476_Coach's Corner Teams Background PPT_A1424.png")
-          center/cover no-repeat;
+}
 
+.auth-page::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("./images/2025 - Teams Backgrounds-08.jpg") center/cover
+    no-repeat;
+  /* filter: blur(4px); */
+  opacity: 0.6;
+  transform: scale(1.02);
+  z-index: 0;
+}
+
+.auth-page > * {
+  position: relative;
+  z-index: 1;
 }
 
 .auth-shell {
@@ -30,8 +44,7 @@
   color: #f6fbff;
   background:
     linear-gradient(180deg, rgba(23, 37, 53, 0.08), rgba(23, 37, 53, 0.28)),
-    url("/images/2025%20-%20Teams%20Backgrounds-06.jpg")
-      center/cover no-repeat;
+    url("/images/2025%20-%20Teams%20Backgrounds-06.jpg") center/cover no-repeat;
 }
 
 .auth-hero__overlay {
@@ -63,7 +76,7 @@
 }
 
 .auth-hero h1 {
-/* width: 400px; */
+  /* width: 400px; */
   margin: 0;
   font-size: clamp(2.5rem, 6vw, 3.4rem);
   line-height: 0.95;
