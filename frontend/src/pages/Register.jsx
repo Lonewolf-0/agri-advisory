@@ -1,6 +1,7 @@
 import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import AuthShell from "../components/AuthShell";
 import api from "../services/api";
-import { useNavigate, Link } from "react-router-dom";
 
 function Register() {
   const navigate = useNavigate();
@@ -27,24 +28,63 @@ function Register() {
   };
 
   return (
-    <div>
-      <h2>Register</h2>
+    <AuthShell
+      eyebrow="Agri Advisory"
+      title="Create your farm account"
+      subtitle="Register once and keep your crop and location data in one place."
+      asideTitle="Sign up"
+      asideSubtitle="Need an account?"
+      footer={
+        <p className="auth-card__footer">
+          Already have an account? <Link to="/login">Login</Link>
+        </p>
+      }
+    >
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleRegister();
+        }}
+      >
+        <div className="auth-field">
+          <span className="auth-field__icon" aria-hidden="true">
+            ◇
+          </span>
+          <input
+            placeholder="Name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+        </div>
 
-      <input placeholder="Name" onChange={(e) => setName(e.target.value)} />
+        <div className="auth-field">
+          <span className="auth-field__icon" aria-hidden="true">
+            @
+          </span>
+          <input
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+        </div>
 
-      <input placeholder="Email" onChange={(e) => setEmail(e.target.value)} />
+        <div className="auth-field">
+          <span className="auth-field__icon" aria-hidden="true">
+            •
+          </span>
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </div>
 
-      <input
-        type="password"
-        placeholder="Password"
-        onChange={(e) => setPassword(e.target.value)}
-      />
-
-      <button onClick={handleRegister}>Register</button>
-      <p>
-        Already have an account? <Link to="/login">Login</Link>
-      </p>
-    </div>
+        <button type="submit" className="auth-button">
+          Register
+        </button>
+      </form>
+    </AuthShell>
   );
 }
 

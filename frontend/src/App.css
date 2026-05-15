@@ -1,0 +1,243 @@
+.auth-page {
+  min-height: 100svh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  box-sizing: border-box;
+  background:
+    linear-gradient(180deg, rgba(14, 40, 66, 0.16), rgba(14, 40, 66, 0.5)),
+    radial-gradient(circle at top, rgba(180, 206, 226, 0.28), transparent 42%),
+    linear-gradient(135deg, #6988a3 0%, #2a3e56 52%, #172635 100%);
+}
+
+.auth-shell {
+  width: min(1120px, 100%);
+  min-height: 620px;
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.35);
+  background: rgba(255, 255, 255, 0.78);
+  backdrop-filter: blur(16px);
+}
+
+.auth-hero {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  padding: 48px;
+  color: #f6fbff;
+  background:
+    linear-gradient(180deg, rgba(23, 37, 53, 0.08), rgba(23, 37, 53, 0.28)),
+    url("/images/2025%20-%20Teams%20Backgrounds-06.jpg")
+      center/cover no-repeat;
+}
+
+.auth-hero__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    115deg,
+    rgba(248, 251, 255, 0.2) 0%,
+    rgba(248, 251, 255, 0.03) 36%,
+    rgba(16, 26, 38, 0.16) 100%
+  );
+  mix-blend-mode: screen;
+}
+
+.auth-hero__content {
+  position: relative;
+  z-index: 1;
+  max-width: 400px;
+  text-align: left;
+  margin-top: 8px;
+}
+
+.auth-hero__eyebrow {
+  margin: 0 0 18px;
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.26em;
+  opacity: 0.82;
+}
+
+.auth-hero h1 {
+/* width: 400px; */
+  margin: 0;
+  font-size: clamp(2.5rem, 6vw, 3.4rem);
+  line-height: 0.95;
+  letter-spacing: -0.06em;
+  color: #f8fbff;
+  overflow-wrap: anywhere;
+}
+
+.auth-hero__subtitle {
+  margin-top: 18px;
+  max-width: 26ch;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: rgba(242, 247, 252, 0.9);
+}
+
+.auth-panel {
+  display: grid;
+  place-items: center;
+  padding: 32px;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.88),
+    rgba(245, 248, 252, 0.98)
+  );
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 360px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.auth-card__avatar {
+  width: 78px;
+  height: 78px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  margin-bottom: 22px;
+  background: linear-gradient(145deg, #d6dde7, #eff3f8);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.8),
+    0 8px 20px rgba(49, 64, 84, 0.14);
+  color: #4a5d72;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.auth-card__avatar span {
+  transform: translateY(1px);
+}
+
+.auth-card__switch {
+  margin-bottom: 10px;
+  color: #7e8794;
+  font-size: 0.95rem;
+}
+
+.auth-card h2 {
+  margin-bottom: 28px;
+  font-size: 1.9rem;
+  letter-spacing: -0.04em;
+}
+
+.auth-form {
+  width: 100%;
+}
+
+.auth-field {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+  padding: 0 14px;
+  border: 1px solid #d9e1ea;
+  border-radius: 4px;
+  background: #fff;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+.auth-field__icon {
+  color: #9aa6b2;
+  font-size: 1rem;
+  width: 14px;
+  text-align: center;
+  flex: 0 0 auto;
+}
+
+.auth-field input {
+  width: 100%;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  padding: 14px 0;
+  font: inherit;
+  color: #203040;
+}
+
+.auth-field input::placeholder {
+  color: #9aa6b2;
+}
+
+.auth-button {
+  width: 100%;
+  margin-top: 8px;
+  border: 0;
+  border-radius: 3px;
+  background: linear-gradient(180deg, #1d2f58, #15264a);
+  color: #fff;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  padding: 14px 18px;
+  cursor: pointer;
+  transition:
+    transform 160ms ease,
+    box-shadow 160ms ease,
+    opacity 160ms ease;
+  box-shadow: 0 10px 24px rgba(19, 32, 64, 0.22);
+}
+
+.auth-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 14px 26px rgba(19, 32, 64, 0.25);
+}
+
+.auth-button:active {
+  transform: translateY(0);
+}
+
+.auth-card__footer {
+  margin-top: 22px;
+  color: #7e8794;
+  font-size: 0.95rem;
+}
+
+.auth-card__footer a,
+.auth-card__switch a {
+  color: #3a82c8;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.auth-card__footer a:hover,
+.auth-card__switch a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 900px) {
+  .auth-page {
+    padding: 0;
+  }
+
+  .auth-shell {
+    grid-template-columns: 1fr;
+    min-height: 100svh;
+    border-radius: 0;
+  }
+
+  .auth-hero {
+    min-height: 340px;
+  }
+}
+
+@media (max-width: 560px) {
+  .auth-hero,
+  .auth-panel {
+    padding: 24px;
+  }
+
+  .auth-card h2 {
+    font-size: 1.5rem;
+  }
+}

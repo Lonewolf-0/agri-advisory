@@ -1,7 +1,7 @@
-import { useState } from "react";
-import api from "../services/api";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import AuthShell from "../components/AuthShell";
+import api from "../services/api";
 function Login() {
   const navigate = useNavigate();
   useEffect(() => {
@@ -11,6 +11,8 @@ function Login() {
       navigate("/dashboard");
     }
   }, [navigate]);
+
+  
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -32,22 +34,52 @@ function Login() {
   };
 
   return (
-    <div>
-      <h2>Login</h2>
+    <AuthShell
+      eyebrow="Agri Advisory"
+      title="Let’s get started with weather-driven farm guidance."
+      subtitle=""
+      asideTitle="Sign in"
+      asideSubtitle="Need an account?"
+      footer={
+        <p className="auth-card__footer">
+          Don’t have an account? <Link to="/register">Register</Link>
+        </p>
+      }
+    >
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleLogin();
+        }}
+      >
+        <div className="auth-field">
+          <span className="auth-field__icon" aria-hidden="true">
+            @
+          </span>
+          <input
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+        </div>
 
-      <input placeholder="Email" onChange={(e) => setEmail(e.target.value)} />
+        <div className="auth-field">
+          <span className="auth-field__icon" aria-hidden="true">
+            •
+          </span>
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </div>
 
-      <input
-        type="password"
-        placeholder="Password"
-        onChange={(e) => setPassword(e.target.value)}
-      />
-
-      <button onClick={handleLogin}>Login</button>
-      <p>
-        Don't have an account ? <Link to="/register">Register</Link>
-      </p>
-    </div>
+        <button type="submit" className="auth-button">
+          Login
+        </button>
+      </form>
+    </AuthShell>
   );
 }
 
