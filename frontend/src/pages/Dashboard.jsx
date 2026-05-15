@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import Navbar from "../components/Navbar";
 import CropSelector from "../components/CropSelector";
@@ -6,6 +6,8 @@ import LocationList from "../components/LocationList";
 import WeatherMap from "../components/WeatherMap";
 import AdvisoryPage from "./AdvisoryPage";
 import api from "../services/api";
+import { hideLoader } from "../utils/loader";
+import { showLoader } from "../utils/loader";
 
 function Dashboard() {
   const [lat, setLat] = useState(null);
@@ -23,6 +25,7 @@ function Dashboard() {
       return;
     }
 
+    showLoader();
     try {
       await api.post("/farm/location", {
         latitude: lat,
@@ -36,8 +39,15 @@ function Dashboard() {
     } catch (err) {
       console.error(err);
       alert("Failed to save location");
+    } finally {
+      hideLoader();
     }
   };
+
+  // hide loader when dashboard mounts (useful after navigation)
+  useEffect(() => {
+    hideLoader();
+  }, []);
 
   return (
     <div>

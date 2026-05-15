@@ -1,13 +1,28 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>frontend</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>frontend</title>
+</head>
+
+<body>
+  <!-- Global Lottie loader (controlled by src/utils/loader.js) -->
+  <div id="global-loader"
+    style="position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#fff;z-index:9999">
+    <div style="text-align:center">
+      <div id="lottie-container" style="width:280px;height:280px;margin:0 auto"></div>
+      <div style="margin-top:12px;font-family:system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:#333">Loading…
+      </div>
+    </div>
+  </div>
+
+  <div id="root"></div>
+  <!-- lottie-web from CDN for rendering Trator verde.json -->
+  <script src="https://unpkg.com/lottie-web@5.9.6/build/player/lottie.min.js"></script>
+  <script type="module" src="/src/main.jsx"></script>
+</body>
+
 </html>

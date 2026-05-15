@@ -5,9 +5,9 @@
   padding: 24px;
   box-sizing: border-box;
   background:
-    linear-gradient(180deg, rgba(14, 40, 66, 0.16), rgba(14, 40, 66, 0.5)),
-    radial-gradient(circle at top, rgba(180, 206, 226, 0.28), transparent 42%),
-    linear-gradient(135deg, #6988a3 0%, #2a3e56 52%, #172635 100%);
+    url("./public/images/9476_Coach's Corner Teams Background PPT_A1424.png")
+          center/cover no-repeat;
+
 }
 
 .auth-shell {

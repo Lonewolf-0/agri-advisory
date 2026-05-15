@@ -1,5 +1,6 @@
 import { useState } from "react";
 import api from "../services/api";
+import { showLoader, hideLoader } from "../utils/loader";
 import Papa from "papaparse";
 import jsPDF from "jspdf";
 
@@ -12,6 +13,7 @@ function AdvisoryPage({ lat, lon }) {
       return;
     }
 
+    showLoader();
     try {
       const res = await api.get(`/advisory?lat=${lat}&lon=${lon}`);
 
@@ -19,6 +21,8 @@ function AdvisoryPage({ lat, lon }) {
     } catch (err) {
       console.error(err);
       alert("Failed to fetch advisory");
+    } finally {
+      hideLoader();
     }
   };
 

@@ -12,13 +12,15 @@ function Login() {
     }
   }, [navigate]);
 
-  
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleLogin = async () => {
     try {
+      // show loader while logging in and navigating
+      const { showLoader } = await import("../utils/loader");
+      showLoader();
+
       const res = await api.post("/auth/login", {
         email,
         password,
@@ -65,7 +67,7 @@ function Login() {
 
         <div className="auth-field">
           <span className="auth-field__icon" aria-hidden="true">
-            •
+            *
           </span>
           <input
             type="password"
