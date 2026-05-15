@@ -4,6 +4,7 @@ import authRoutes from "./routes/authRoutes.js";
 import farmRoutes from "./routes/farmRoutes.js";
 import weatherRoutes from "./routes/weatherRoutes.js";
 import advisoryRoutes from "./routes/advisoryRoutes.js";
+import soilRoutes from "./routes/soilRoutes.js";
 import { errorLogger } from "./middlewares/errorLogger.js";
 import { requestLogger } from "./middlewares/requestLogger.js";
 
@@ -24,6 +25,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/farm", farmRoutes);
 app.use("/api/weather", weatherRoutes);
 app.use("/api/advisory", advisoryRoutes);
+app.use("/api/soil", soilRoutes);
 
 app.use(errorLogger);
 
