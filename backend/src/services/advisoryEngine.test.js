@@ -10,6 +10,7 @@ describe("generateAdvisory", () => {
         windSpeed: 18,
         rainProbability: 75,
       },
+      null,
       "Rice",
     );
 
@@ -35,6 +36,7 @@ describe("generateAdvisory", () => {
           windSpeed: 3,
           rainProbability: 10,
         },
+        null,
         "Wheat",
       ),
     ).toEqual([

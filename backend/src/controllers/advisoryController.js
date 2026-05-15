@@ -2,6 +2,7 @@ import { fetchWeather } from "../services/weatherService.js";
 import { generateAdvisory } from "../services/advisoryEngine.js";
 import { getUserCrop } from "../models/userCropModel.js";
 import { saveAdvisoryLog } from "../models/logModel.js";
+import { fetchSoilData } from "../services/soilService.js";
 
 export async function getAdvisory(req, res, next) {
   try {
@@ -15,12 +16,15 @@ export async function getAdvisory(req, res, next) {
 
     const forecast = await fetchWeather(lat, lon);
 
+    const soil = await fetchSoilData(lat, lon);
+
     const advisoryForecast = forecast.map((day) => {
-      const advisory = generateAdvisory(day, crop);
+      const advisory = generateAdvisory(day,soil, crop);
 
       return {
         date: day.date,
         weather: day,
+        soil,
         advisory,
       };
     });

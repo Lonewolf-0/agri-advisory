@@ -1,6 +1,6 @@
 import { advisoryRules } from "../rules/advisoryRules.js";
 
-export function generateAdvisory(weather, crop) {
+export function generateAdvisory(weather, soil, crop) {
   const normalizedCrop = crop?.trim().toLowerCase() || null;
 
   const advice = [];
@@ -11,7 +11,7 @@ export function generateAdvisory(weather, crop) {
 
     const appliesToCrop = ruleCrop === "ALL" || ruleCrop === normalizedCrop;
 
-    if (appliesToCrop && rule.condition(weather)) {
+    if (appliesToCrop && rule.condition(weather, soil)) {
       advice.push(rule.message);
     }
   }

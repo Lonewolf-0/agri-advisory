@@ -16,9 +16,14 @@ vi.mock("../models/logModel.js", () => ({
   saveAdvisoryLog: vi.fn(),
 }));
 
+vi.mock("../services/soilService.js", () => ({
+  fetchSoilData: vi.fn(),
+}));
+
 const { fetchWeather } = await import("../services/weatherService.js");
 const { generateAdvisory } = await import("../services/advisoryEngine.js");
 const { getUserCrop } = await import("../models/userCropModel.js");
+const { fetchSoilData } = await import("../services/soilService.js");
 const { getAdvisory } = await import("./advisoryController.js");
 
 function createResponse() {
@@ -41,7 +46,14 @@ describe("advisoryController", () => {
       { date: "2026-05-13", temperature: 36 },
       { date: "2026-05-14", temperature: 29 },
     ]);
-    generateAdvisory.mockImplementation((day, crop) => [`${crop}:${day.date}`]);
+    fetchSoilData.mockResolvedValue({
+      ph: 7.4,
+      nitrogen: 1.2,
+      organicCarbon: 8,
+    });
+    generateAdvisory.mockImplementation((day, soil, crop) => [
+      `${crop}:${day.date}`,
+    ]);
 
     await getAdvisory(
       { user: { id: 7 }, query: { lat: "18", lon: "73" } },
@@ -57,11 +69,13 @@ describe("advisoryController", () => {
         {
           date: "2026-05-13",
           weather: { date: "2026-05-13", temperature: 36 },
+          soil: { ph: 7.4, nitrogen: 1.2, organicCarbon: 8 },
           advisory: ["Rice:2026-05-13"],
         },
         {
           date: "2026-05-14",
           weather: { date: "2026-05-14", temperature: 29 },
+          soil: { ph: 7.4, nitrogen: 1.2, organicCarbon: 8 },
           advisory: ["Rice:2026-05-14"],
         },
       ],
