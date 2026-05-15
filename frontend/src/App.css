@@ -188,7 +188,8 @@
   margin-top: 8px;
   border: 0;
   border-radius: 3px;
-  background: linear-gradient(180deg, #1d2f58, #15264a);
+  /* Green gradient to match tractor/field image */
+  background: linear-gradient(180deg, #60bf3a, #2a6f3a);
   color: #fff;
   font-weight: 600;
   letter-spacing: 0.01em;
@@ -203,7 +204,7 @@
 
 .auth-button:hover {
   transform: translateY(-1px);
-  box-shadow: 0 14px 26px rgba(19, 32, 64, 0.25);
+  box-shadow: 0 14px 26px rgba(20, 60, 30, 0.28);
 }
 
 .auth-button:active {
@@ -252,5 +253,170 @@
 
   .auth-card h2 {
     font-size: 1.5rem;
+  }
+}
+
+/* Dashboard full-bleed map + floating panels */
+.dashboard-shell {
+  position: relative;
+  min-height: 100svh;
+  width: 100%;
+  overflow: hidden;
+  background: #e9eef5;
+}
+
+.map-panel {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+/* Ensure leaflet map fills the panel */
+.map-panel .leaflet-container {
+  height: 100svh !important;
+  width: 100% !important;
+}
+
+/* Ensure leaflet map sits under our custom controls */
+.map-panel .leaflet-container {
+  z-index: 0 !important;
+}
+
+.top-nav-overlay {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  right: 12px;
+  z-index: 25;
+  display: flex;
+  justify-content: flex-end;
+  pointer-events: none;
+}
+
+.top-nav-overlay > * {
+  pointer-events: auto;
+}
+
+.panel {
+  position: absolute;
+  z-index: 20;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(6px) saturate(1.05);
+  box-shadow: 0 8px 30px rgba(6, 20, 34, 0.18);
+  border-radius: 12px;
+  padding: 12px;
+}
+
+.panel-inner {
+  max-width: 420px;
+}
+
+.left-panel {
+  left: 16px;
+  top: 22px;
+  width: min(420px, 38%);
+  max-height: calc(100svh - 160px);
+  overflow: auto;
+}
+
+.right-panel {
+  right: 16px;
+  top: 72px;
+  width: min(420px, 30%);
+  max-height: calc(100svh - 140px);
+  overflow: auto;
+}
+
+.save-btn {
+  display: inline-block;
+  margin: 10px 0 16px 0;
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 0;
+  background: linear-gradient(180deg, #2a6f3a, #1f4f28);
+  color: #fff;
+  cursor: pointer;
+}
+
+@media (max-width: 920px) {
+  .left-panel,
+  .right-panel {
+    width: calc(50% - 24px);
+    left: 12px;
+    right: 12px;
+    top: auto;
+    bottom: 12px;
+    max-height: 40vh;
+    overflow: auto;
+    transform: translateY(0);
+  }
+
+  .right-panel {
+    left: auto;
+    right: 12px;
+  }
+}
+
+@media (max-width: 560px) {
+  .left-panel,
+  .right-panel {
+    position: static;
+    width: 100%;
+    border-radius: 0;
+    background: rgba(255, 255, 255, 0.92);
+    padding: 8px 12px;
+  }
+  .top-nav-overlay {
+    left: 8px;
+    right: 8px;
+  }
+}
+
+/* Map controls (layer buttons / locate) */
+.map-controls {
+  position: absolute;
+  z-index: 1001;
+  background: rgba(255, 255, 255, 0.86);
+  backdrop-filter: blur(6px);
+  padding: 8px;
+  border-radius: 10px;
+  box-shadow: 0 6px 18px rgba(6, 20, 34, 0.14);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.map-controls.bottom-left {
+  width: min(420px, 38%);
+  left: 16px;
+  bottom: 16px;
+}
+
+/* Ensure the WeatherMap wrapper fills the viewport so controls position correctly */
+.weather-map-shell {
+  height: 100svh;
+  width: 100%;
+  position: relative;
+}
+
+.map-controls .map-controls-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.map-controls button {
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 0;
+  background: #fff;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(6, 20, 34, 0.08);
+}
+
+@media (max-width: 720px) {
+  .map-controls {
+    left: 10px;
+    bottom: 10px;
   }
 }

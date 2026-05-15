@@ -50,28 +50,42 @@ function Dashboard() {
   }, []);
 
   return (
-    <div>
-      <Navbar />
+    <div className="dashboard-shell">
+      <div className="map-panel">
+        <WeatherMap lat={lat} lon={lon} setLat={setLat} setLon={setLon} />
+      </div>
 
-      <h2>Farmer Dashboard</h2>
+      <div className="top-nav-overlay">
+        <Navbar />
+      </div>
 
-      <CropSelector />
+      <div className="panel left-panel">
+        <div className="panel-inner">
+          <h2>Farmer Dashboard</h2>
 
-      <h3>Select Farm Location</h3>
+          <CropSelector />
 
-      <WeatherMap lat={lat} lon={lon} setLat={setLat} setLon={setLon} />
+          <h3>Select Farm Location</h3>
 
-      <p>Latitude: {lat}</p>
-      <p>Longitude: {lon}</p>
+          <p>Latitude: {lat}</p>
+          <p>Longitude: {lon}</p>
 
-      <button onClick={saveLocation}>Save Farm Location</button>
+          <button className="save-btn" onClick={saveLocation}>
+            Save Farm Location
+          </button>
 
-      <LocationList
-        onSelectLocation={handleLocationSelect}
-        reloadTrigger={reloadLocations}
-      />
+          <LocationList
+            onSelectLocation={handleLocationSelect}
+            reloadTrigger={reloadLocations}
+          />
+        </div>
+      </div>
 
-      <AdvisoryPage lat={lat} lon={lon} />
+      <div className="panel right-panel">
+        <div className="panel-inner">
+          <AdvisoryPage lat={lat} lon={lon} />
+        </div>
+      </div>
     </div>
   );
 }

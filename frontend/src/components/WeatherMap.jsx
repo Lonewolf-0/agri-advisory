@@ -176,22 +176,27 @@ function WeatherMap({ lat, lon, setLat, setLon }) {
   const position = lat && lon ? [lat, lon] : [20.5937, 78.9629];
 
   return (
-    <div>
-      <div style={{ marginBottom: "10px" }}>
-        <button onClick={() => setLayer("none")}>Normal</button>
-        <button onClick={() => setLayer("rain")}>Rain</button>
-        <button onClick={() => setLayer("temp")}>Temperature</button>
-        <button onClick={() => setLayer("wind")}>Wind</button>
-      </div>
+    <div className="weather-map-shell" style={{ position: "relative" }}>
+      <div className="map-controls bottom-left">
+        <div className="map-controls-row">
+          <button onClick={() => setLayer("none")}>Normal</button>
+          <button onClick={() => setLayer("rain")}>Rain</button>
+          <button onClick={() => setLayer("temp")}>Temperature</button>
+          <button onClick={() => setLayer("wind")}>Wind</button>
+        </div>
 
-      <button onClick={detectLocation} disabled={locating}>
-        {locating ? "Locating..." : "Use Current Location"}
-      </button>
+        <div style={{ marginTop: 8 }}>
+          <button onClick={detectLocation} disabled={locating}>
+            {locating ? "Locating..." : "Use Current Location"}
+          </button>
+        </div>
+      </div>
 
       <MapContainer
         center={position}
         zoom={lat ? 10 : 5}
-        style={{ height: "600px", width: "100%" }}
+        style={{ height: "100%", width: "100%" }}
+        zoomControl={false}
       >
         <RecenterMap lat={lat} lon={lon} />
 
