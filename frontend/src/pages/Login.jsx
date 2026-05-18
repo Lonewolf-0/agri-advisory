@@ -2,8 +2,10 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import AuthShell from "../components/AuthShell";
 import api from "../services/api";
+import { useToast } from "../components/ToastProvider";
 function Login() {
   const navigate = useNavigate();
+  const { toast } = useToast();
   useEffect(() => {
     const token = localStorage.getItem("token");
 
@@ -31,7 +33,7 @@ function Login() {
       navigate("/dashboard");
     } catch (err) {
       console.log(err);
-      alert("Login failed");
+      toast("Login failed", { type: "error" });
     }
   };
 

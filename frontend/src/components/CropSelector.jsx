@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { FaChevronDown, FaSeedling } from "react-icons/fa6";
 import api from "../services/api";
+import { useToast } from "../components/ToastProvider";
 
 function CropSelector() {
   const [crops, setCrops] = useState([]);
@@ -9,6 +10,7 @@ function CropSelector() {
   const [open, setOpen] = useState(false);
   const menuRef = useRef(null);
   const triggerRef = useRef(null);
+  const { toast } = useToast();
 
   useEffect(() => {
     let mounted = true;
@@ -62,7 +64,7 @@ function CropSelector() {
       await api.post("/farm/select-crop", { cropId: crop.id });
     } catch (error) {
       console.error(error);
-      alert("Failed to save crop selection");
+      toast("Failed to save crop selection", { type: "error" });
     } finally {
       setSaving(false);
     }

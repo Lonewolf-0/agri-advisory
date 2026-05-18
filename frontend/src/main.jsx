@@ -5,10 +5,13 @@ import "./App.css";
 import "./index.css";
 import App from "./App.jsx";
 import { hideLoader } from "./utils/loader";
+import { ToastProvider } from "./components/ToastProvider";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <App />
+    <ToastProvider>
+      <App />
+    </ToastProvider>
   </StrictMode>,
 );
 

@@ -8,11 +8,13 @@ import AdvisoryPage from "./AdvisoryPage";
 import api from "../services/api";
 import { hideLoader } from "../utils/loader";
 import { showLoader } from "../utils/loader";
+import { useToast } from "../components/ToastProvider";
 
 function Dashboard() {
   const [lat, setLat] = useState(null);
   const [lon, setLon] = useState(null);
   const [reloadLocations, setReloadLocations] = useState(false);
+  const { toast } = useToast();
 
   const handleLocationSelect = (location) => {
     setLat(location.latitude);
@@ -21,7 +23,7 @@ function Dashboard() {
 
   const saveLocation = async (latitude = lat, longitude = lon) => {
     if (!latitude || !longitude) {
-      alert("Please select a location on the map");
+      toast("Please select a location on the map", { type: "error" });
       return;
     }
 
@@ -32,13 +34,13 @@ function Dashboard() {
         longitude,
       });
 
-      alert("Farm location saved");
+      toast("Farm location saved", { type: "success" });
 
       // trigger list refresh
       setReloadLocations(!reloadLocations);
     } catch (err) {
       console.error(err);
-      alert("Failed to save location");
+      toast("Failed to save location", { type: "error" });
     } finally {
       hideLoader();
     }

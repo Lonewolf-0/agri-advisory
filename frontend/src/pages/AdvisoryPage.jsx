@@ -4,13 +4,15 @@ import api from "../services/api";
 import { showLoader, hideLoader } from "../utils/loader";
 import Papa from "papaparse";
 import jsPDF from "jspdf";
+import { useToast } from "../components/ToastProvider";
 
 function AdvisoryPage({ lat, lon }) {
   const [forecast, setForecast] = useState([]);
+  const { toast } = useToast();
 
   const getAdvisory = async () => {
     if (!lat || !lon) {
-      alert("Please select a farm location");
+      toast("Please select a farm location", { type: "error" });
       return;
     }
 
@@ -21,7 +23,7 @@ function AdvisoryPage({ lat, lon }) {
       setForecast(res.data.forecast);
     } catch (err) {
       console.error(err);
-      alert("Failed to fetch advisory");
+      toast("Failed to fetch advisory", { type: "error" });
     } finally {
       hideLoader();
     }

@@ -2,9 +2,11 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import AuthShell from "../components/AuthShell";
 import api from "../services/api";
+import { useToast } from "../components/ToastProvider";
 
 function Register() {
   const navigate = useNavigate();
+  const { toast } = useToast();
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -18,12 +20,12 @@ function Register() {
         password,
       });
 
-      alert("Registration successful");
+      toast("Registration successful", { type: "success" });
 
       navigate("/login");
     } catch (err) {
       console.log(err);
-      alert("Registration failed");
+      toast("Registration failed", { type: "error" });
     }
   };
 

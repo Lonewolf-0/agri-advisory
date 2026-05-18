@@ -18,6 +18,7 @@ import {
   FaWind,
 } from "react-icons/fa";
 import api from "../services/api";
+import { useToast } from "../components/ToastProvider";
 
 function MapClickHandler({ setLat, setLon, setPopupData }) {
   useMapEvents({
@@ -115,10 +116,11 @@ function WeatherMap({ lat, lon, setLat, setLon, onSaveFarm }) {
   const [layer, setLayer] = useState("none");
   const [popupData, setPopupData] = useState(null);
   const [locating, setLocating] = useState(false);
+  const { toast } = useToast();
 
   const detectLocation = async () => {
     if (!navigator.geolocation) {
-      alert("Geolocation is not supported by your browser");
+      toast("Geolocation is not supported by your browser", { type: "error" });
       return;
     }
 
@@ -144,8 +146,9 @@ function WeatherMap({ lat, lon, setLat, setLon, onSaveFarm }) {
       console.warn("Geolocation failed:", err);
 
       if (err && err.code === 1) {
-        alert(
+        toast(
           "Location access denied. Please allow location access in your browser.",
+          { type: "error" },
         );
       } else {
         // Fallback: try IP-based lookup
@@ -166,7 +169,7 @@ function WeatherMap({ lat, lon, setLat, setLon, onSaveFarm }) {
           console.warn("IP fallback failed:", e);
         }
 
-        alert("Unable to determine your location.");
+        toast("Unable to determine your location.", { type: "error" });
       }
     } finally {
       setLocating(false);
