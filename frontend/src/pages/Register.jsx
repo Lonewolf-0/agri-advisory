@@ -33,7 +33,6 @@ function Register() {
       title="Create your farm account"
       subtitle="Register once and keep your crop and location data in one place."
       asideTitle="Sign up"
-      asideSubtitle="Need an account?"
       footer={
         <p className="auth-card__footer">
           Already have an account? <Link to="/login">Login</Link>
@@ -57,6 +56,12 @@ function Register() {
             placeholder="Name"
             value={name}
             onChange={(e) => setName(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                e.preventDefault();
+                handleRegister();
+              }
+            }}
           />
         </div>
 
@@ -70,6 +75,12 @@ function Register() {
             placeholder="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                e.preventDefault();
+                handleRegister();
+              }
+            }}
           />
         </div>
 
@@ -84,6 +95,12 @@ function Register() {
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                e.preventDefault();
+                handleRegister();
+              }
+            }}
           />
         </div>
 

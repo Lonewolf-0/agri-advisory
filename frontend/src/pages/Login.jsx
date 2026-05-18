@@ -41,7 +41,6 @@ function Login() {
       title="Let’s get started with weather-driven farm guidance."
       subtitle=""
       asideTitle="Sign in"
-      asideSubtitle="Need an account?"
       footer={
         <p className="auth-card__footer">
           Don’t have an account? <Link to="/register">Register</Link>
@@ -65,6 +64,12 @@ function Login() {
             placeholder="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                e.preventDefault();
+                handleLogin();
+              }
+            }}
           />
         </div>
 
@@ -79,6 +84,12 @@ function Login() {
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                e.preventDefault();
+                handleLogin();
+              }
+            }}
           />
         </div>
 
