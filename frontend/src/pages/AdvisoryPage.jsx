@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { FaFileCsv, FaFilePdf, FaWandMagicSparkles } from "react-icons/fa6";
 import api from "../services/api";
 import { showLoader, hideLoader } from "../utils/loader";
 import Papa from "papaparse";
@@ -102,28 +103,7 @@ function AdvisoryPage({ lat, lon }) {
         className="apple-liquid-glass advisory__button advisory__button--primary"
         onClick={getAdvisory}
       >
-        <svg
-          className="icon"
-          viewBox="0 0 24 24"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          aria-hidden
-        >
-          <path
-            d="M12 2v14"
-            stroke="currentColor"
-            strokeWidth="1.8"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-          <path
-            d="M5 9l7-7 7 7"
-            stroke="currentColor"
-            strokeWidth="1.8"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
+        <FaWandMagicSparkles className="icon" aria-hidden />
         Generate Advisory
       </button>
       {forecast.length > 0 && (
@@ -132,50 +112,14 @@ function AdvisoryPage({ lat, lon }) {
             className="apple-liquid-glass advisory__button"
             onClick={exportPDF}
           >
-            <svg
-              className="icon"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-              aria-hidden
-            >
-              <path
-                d="M6 2h7l5 5v13a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1z"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.6"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-              <path
-                d="M13 2v6h6"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.6"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
+            <FaFilePdf className="icon" aria-hidden />
             Export PDF
           </button>
           <button
             className="apple-liquid-glass advisory__button"
             onClick={exportCSV}
           >
-            <svg
-              className="icon"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-              aria-hidden
-            >
-              <path
-                d="M3 7h18M3 12h18M3 17h18"
-                stroke="currentColor"
-                strokeWidth="1.6"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                fill="none"
-              />
-            </svg>
+            <FaFileCsv className="icon" aria-hidden />
             Export CSV
           </button>
         </>

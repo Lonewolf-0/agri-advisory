@@ -9,6 +9,14 @@ import {
 import { useEffect, useRef, useState } from "react";
 import L from "leaflet";
 import "leaflet-velocity";
+import {
+  FaCloud,
+  FaCloudRain,
+  FaLocationArrow,
+  FaSave,
+  FaTemperatureHigh,
+  FaWind,
+} from "react-icons/fa";
 import api from "../services/api";
 
 function MapClickHandler({ setLat, setLon, setPopupData }) {
@@ -184,21 +192,7 @@ function WeatherMap({ lat, lon, setLat, setLon, onSaveFarm }) {
             onClick={() => setLayer("none")}
             aria-pressed={layer === "none"}
           >
-            <svg
-              className="icon"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-              aria-hidden
-            >
-              <circle
-                cx="12"
-                cy="12"
-                r="3"
-                stroke="currentColor"
-                strokeWidth="1.6"
-                fill="none"
-              />
-            </svg>
+            <FaCloud className="icon" aria-hidden />
             Normal
           </button>
           <button
@@ -206,26 +200,7 @@ function WeatherMap({ lat, lon, setLat, setLon, onSaveFarm }) {
             onClick={() => setLayer("rain")}
             aria-pressed={layer === "rain"}
           >
-            <svg
-              className="icon"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-              aria-hidden
-            >
-              <path
-                d="M16 13a4 4 0 0 0-8 0"
-                stroke="currentColor"
-                strokeWidth="1.6"
-                fill="none"
-                strokeLinecap="round"
-              />
-              <path
-                d="M8 17l.01 0M12 17l.01 0M16 17l.01 0"
-                stroke="currentColor"
-                strokeWidth="1.6"
-                strokeLinecap="round"
-              />
-            </svg>
+            <FaCloudRain className="icon" aria-hidden />
             Rain
           </button>
           <button
@@ -233,29 +208,7 @@ function WeatherMap({ lat, lon, setLat, setLon, onSaveFarm }) {
             onClick={() => setLayer("temp")}
             aria-pressed={layer === "temp"}
           >
-            <svg
-              className="icon"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-              aria-hidden
-            >
-              <path
-                d="M12 2v12"
-                stroke="currentColor"
-                strokeWidth="1.6"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                fill="none"
-              />
-              <circle
-                cx="12"
-                cy="18"
-                r="3"
-                stroke="currentColor"
-                strokeWidth="1.6"
-                fill="none"
-              />
-            </svg>
+            <FaTemperatureHigh className="icon" aria-hidden />
             Temperature
           </button>
           <button
@@ -263,27 +216,7 @@ function WeatherMap({ lat, lon, setLat, setLon, onSaveFarm }) {
             onClick={() => setLayer("wind")}
             aria-pressed={layer === "wind"}
           >
-            <svg
-              className="icon"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-              aria-hidden
-            >
-              <path
-                d="M3 12h12a3 3 0 0 0 0-6 3 3 0 0 0-3 3"
-                stroke="currentColor"
-                strokeWidth="1.6"
-                fill="none"
-                strokeLinecap="round"
-              />
-              <path
-                d="M3 18h8a2 2 0 0 0 0-4 2 2 0 0 0-2 2"
-                stroke="currentColor"
-                strokeWidth="1.6"
-                fill="none"
-                strokeLinecap="round"
-              />
-            </svg>
+            <FaWind className="icon" aria-hidden />
             Wind
           </button>
         </div>
@@ -294,21 +227,7 @@ function WeatherMap({ lat, lon, setLat, setLon, onSaveFarm }) {
             onClick={detectLocation}
             disabled={locating}
           >
-            <svg
-              className="icon"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-              aria-hidden
-            >
-              <path
-                d="M12 2v2M12 20v2M4.93 4.93L6.34 6.34M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"
-                stroke="currentColor"
-                strokeWidth="1.4"
-                fill="none"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
+            <FaLocationArrow className="icon" aria-hidden />
             {locating ? "Locating..." : "Use Current Location"}
           </button>
         </div>
@@ -382,26 +301,7 @@ function WeatherMap({ lat, lon, setLat, setLon, onSaveFarm }) {
                     onSaveFarm(popupData.position[0], popupData.position[1])
                   }
                 >
-                  <svg
-                    className="icon"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                    aria-hidden
-                  >
-                    <path
-                      d="M5 4h14v16H5z"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="1.6"
-                      strokeLinejoin="round"
-                    />
-                    <path
-                      d="M9 9h6v6H9z"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="1.6"
-                    />
-                  </svg>
+                  <FaSave className="icon" aria-hidden />
                   Save Farm
                 </button>
               )}

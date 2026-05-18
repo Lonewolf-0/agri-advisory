@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { FaLocationDot } from "react-icons/fa6";
 import api from "../services/api";
 
 function LocationList({ onSelectLocation, reloadTrigger }) {
@@ -53,22 +54,7 @@ function LocationList({ onSelectLocation, reloadTrigger }) {
               role="button"
               tabIndex={0}
             >
-              <svg
-                className="icon"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-                aria-hidden
-              >
-                <path
-                  d="M12 2C8 2 5 5 5 9c0 5 7 13 7 13s7-8 7-13c0-4-3-7-7-7z"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.6"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                <circle cx="12" cy="9" r="1.5" fill="currentColor" />
-              </svg>
+              <FaLocationDot className="icon" aria-hidden />
               {loc.district}, {loc.state}
               <br />
               Lat: {displayLat} | Lon: {displayLon}

@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { FaChevronDown, FaSeedling } from "react-icons/fa6";
 import api from "../services/api";
 
 function CropSelector() {
@@ -88,13 +89,9 @@ function CropSelector() {
         }}
         disabled={saving}
       >
-        <svg className="icon" viewBox="0 0 24 24" aria-hidden>
-          <path d="M4 7h16v2H4z" fill="currentColor" />
-        </svg>
+        <FaSeedling className="icon" aria-hidden />
         <span style={{ flex: 1, textAlign: "left" }}>{label}</span>
-        <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden>
-          <path d="M7 10l5 5 5-5z" fill="currentColor"></path>
-        </svg>
+        <FaChevronDown className="icon" aria-hidden />
       </button>
 
       {open && (
