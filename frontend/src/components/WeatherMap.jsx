@@ -103,7 +103,7 @@ function RecenterMap({ lat, lon }) {
 
 // detectLocation moved into WeatherMap to access setLat/setLon
 
-function WeatherMap({ lat, lon, setLat, setLon }) {
+function WeatherMap({ lat, lon, setLat, setLon, onSaveFarm }) {
   const [layer, setLayer] = useState("none");
   const [popupData, setPopupData] = useState(null);
   const [locating, setLocating] = useState(false);
@@ -177,16 +177,40 @@ function WeatherMap({ lat, lon, setLat, setLon }) {
 
   return (
     <div className="weather-map-shell" style={{ position: "relative" }}>
-      <div className="map-controls bottom-left">
+      <div className="map-controls bottom-left apple-liquid-glass">
         <div className="map-controls-row">
-          <button onClick={() => setLayer("none")}>Normal</button>
-          <button onClick={() => setLayer("rain")}>Rain</button>
-          <button onClick={() => setLayer("temp")}>Temperature</button>
-          <button onClick={() => setLayer("wind")}>Wind</button>
+          <button
+            className="apple-liquid-glass"
+            onClick={() => setLayer("none")}
+          >
+            Normal
+          </button>
+          <button
+            className="apple-liquid-glass"
+            onClick={() => setLayer("rain")}
+          >
+            Rain
+          </button>
+          <button
+            className="apple-liquid-glass"
+            onClick={() => setLayer("temp")}
+          >
+            Temperature
+          </button>
+          <button
+            className="apple-liquid-glass"
+            onClick={() => setLayer("wind")}
+          >
+            Wind
+          </button>
         </div>
 
         <div style={{ marginTop: 8 }}>
-          <button onClick={detectLocation} disabled={locating}>
+          <button
+            className="apple-liquid-glass"
+            onClick={detectLocation}
+            disabled={locating}
+          >
             {locating ? "Locating..." : "Use Current Location"}
           </button>
         </div>
@@ -234,11 +258,31 @@ function WeatherMap({ lat, lon, setLat, setLon }) {
           >
             <div>
               <strong>Weather Details</strong>
+              <p>
+                <b>Latitude: </b>
+                {popupData.position[0].toFixed(5)}
+              </p>
+              <p>
+                <b>Longitude: </b>
+                {popupData.position[1].toFixed(5)}
+              </p>
 
               <p>Temperature: {popupData.weather.temperature} °C</p>
               <p>Humidity: {popupData.weather.humidity} %</p>
               <p>Wind Speed: {popupData.weather.windSpeed} m/s</p>
               <p>Rain Probability: {popupData.weather.rainProbability} %</p>
+
+              {onSaveFarm && (
+                <button
+                  type="button"
+                  className="apple-liquid-glass save-btn"
+                  onClick={() =>
+                    onSaveFarm(popupData.position[0], popupData.position[1])
+                  }
+                >
+                  Save Farm
+                </button>
+              )}
             </div>
           </Popup>
         )}

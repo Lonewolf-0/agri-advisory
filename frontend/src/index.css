@@ -1,33 +1,66 @@
 :root {
-  --text: #5d6774;
-  --text-h: #101827;
-  --bg: #f4f7fb;
-  --border: #d8e0ea;
-  --code-bg: #eef2f7;
+  --text: #16202b;
+  --text-muted: #5f6b7a;
+  --text-h: #09111d;
+  --bg: #f3f7fb;
+  --bg-elevated: rgba(255, 255, 255, 0.72);
+  --border: rgba(214, 223, 233, 0.86);
+  --code-bg: rgba(238, 242, 247, 0.92);
   --accent: #2e6dd8;
   --accent-bg: rgba(46, 109, 216, 0.1);
   --accent-border: rgba(46, 109, 216, 0.35);
-  --social-bg: rgba(255, 255, 255, 0.7);
   --shadow:
     rgba(15, 23, 42, 0.08) 0 10px 15px -3px,
     rgba(15, 23, 42, 0.04) 0 4px 6px -2px;
 
-  --sans: "Inter", "Segoe UI", Roboto, sans-serif;
-  --heading: "Inter", "Segoe UI", Roboto, sans-serif;
-  --mono: ui-monospace, Consolas, monospace;
+  --sans:
+    -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display",
+    "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --heading:
+    -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text",
+    "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --mono: ui-monospace, SFMono-Regular, Consolas, monospace;
 
-  font: 18px/145% var(--sans);
-  letter-spacing: 0.18px;
+  font: 17px/1.45 var(--sans);
+  letter-spacing: 0.01em;
   color-scheme: light;
   color: var(--text);
-  background: var(--bg);
+  background:
+    radial-gradient(
+      circle at top left,
+      rgba(255, 255, 255, 0.92),
+      transparent 38%
+    ),
+    linear-gradient(180deg, #f7fbff 0%, #edf3f9 100%);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
 
-  @media (max-width: 1024px) {
+@media (max-width: 1024px) {
+  :root {
     font-size: 16px;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text: #d7deea;
+    --text-muted: #8b97a7;
+    --text-h: #f7fafc;
+    --bg: #09111c;
+    --bg-elevated: rgba(14, 20, 32, 0.72);
+    --border: rgba(110, 123, 146, 0.34);
+    --code-bg: rgba(19, 28, 42, 0.88);
+    color-scheme: dark;
+    background:
+      radial-gradient(
+        circle at top left,
+        rgba(78, 122, 186, 0.18),
+        transparent 38%
+      ),
+      linear-gradient(180deg, #09111c 0%, #101a28 100%);
   }
 }
 
@@ -35,6 +68,7 @@ body {
   margin: 0;
   min-width: 320px;
   background: var(--bg);
+  color: var(--text);
 }
 
 * {
@@ -51,7 +85,9 @@ a {
 }
 
 button,
-input {
+input,
+select,
+textarea {
   font: inherit;
 }
 

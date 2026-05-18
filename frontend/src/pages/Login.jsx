@@ -49,35 +49,40 @@ function Login() {
       }
     >
       <form
+        className="auth-form"
         onSubmit={(e) => {
           e.preventDefault();
           handleLogin();
         }}
       >
-        <div className="auth-field">
+        <div className="auth-field apple-liquid-glass">
           <span className="auth-field__icon" aria-hidden="true">
             @
           </span>
           <input
+            className="auth-field__input"
+            autoComplete="email"
             placeholder="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
         </div>
 
-        <div className="auth-field">
+        <div className="auth-field apple-liquid-glass">
           <span className="auth-field__icon" aria-hidden="true">
             *
           </span>
           <input
+            className="auth-field__input"
             type="password"
+            autoComplete="current-password"
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
 
-        <button type="submit" className="auth-button">
+        <button type="submit" className="auth-button apple-liquid-glass">
           Login
         </button>
       </form>

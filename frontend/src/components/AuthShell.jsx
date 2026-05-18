@@ -9,7 +9,7 @@ function AuthShell({
 }) {
   return (
     <main className="auth-page">
-      <section className="auth-shell">
+      <section className="auth-shell apple-liquid-glass">
         <div className="auth-hero">
           <div className="auth-hero__overlay" />
           <div className="auth-hero__content">
@@ -19,7 +19,7 @@ function AuthShell({
           </div>
         </div>
 
-        <div className="auth-panel">
+        <div className="auth-panel apple-liquid-glass">
           <div className="auth-card">
             <div className="auth-card__avatar" aria-hidden="true">
               <span>AG</span>

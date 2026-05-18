@@ -41,6 +41,7 @@ function CropSelector() {
       <h3>Select Crop</h3>
 
       <select
+        className="apple-liquid-glass crop-selector__select"
         value={selectedCrop}
         onChange={handleCropChange}
         disabled={saving}

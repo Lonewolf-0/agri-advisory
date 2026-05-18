@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-empty */
 let initialized = false;
 let anim = null;
 let initPromise = null;

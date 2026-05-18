@@ -16,14 +16,14 @@ function LocationList({ onSelectLocation, reloadTrigger }) {
   }, [reloadTrigger]);
 
   return (
-    <div>
+    <div className="location-list">
       <h3>Your Saved Farm Locations</h3>
 
       <ul>
         {locations.map((loc) => (
           <li
             key={loc.id}
-            style={{ color: "blue", cursor: "pointer", marginBottom: "10px" }}
+            className="apple-liquid-glass location-list__item"
             onClick={() => onSelectLocation(loc)}
           >
             {loc.district}, {loc.state}

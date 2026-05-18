@@ -1,3 +1,124 @@
+/* Shared Apple-style glass utility */
+.apple-liquid-glass {
+  --glass-radius: 22px;
+  --glass-surface: 255 255 255;
+  --glass-highlight: 255 255 255;
+  --glass-shadow: 15 23 42;
+  --glass-text: 17 24 39;
+  --glass-blur: 28px;
+  --glass-brightness: 1.08;
+  --glass-saturation: 1.55;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border: 1px solid transparent;
+  border-radius: var(--glass-radius);
+  color: rgb(var(--glass-text));
+  background-image:
+    linear-gradient(
+      180deg,
+      rgba(var(--glass-surface), 0.42),
+      rgba(var(--glass-surface), 0.2)
+    ),
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.92) 0%,
+      rgba(255, 255, 255, 0.32) 28%,
+      rgba(255, 255, 255, 0.08) 58%,
+      rgba(255, 255, 255, 0.26) 82%,
+      rgba(255, 255, 255, 0.78) 100%
+    );
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  backdrop-filter: blur(var(--glass-blur)) brightness(var(--glass-brightness))
+    saturate(var(--glass-saturation));
+  -webkit-backdrop-filter: blur(var(--glass-blur))
+    brightness(var(--glass-brightness)) saturate(var(--glass-saturation));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.55),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.08),
+    0 24px 60px rgba(var(--glass-shadow), 0.18);
+  transform: translateZ(0);
+}
+
+.apple-liquid-glass::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      circle at 14% 0%,
+      rgba(255, 255, 255, 0.62),
+      rgba(255, 255, 255, 0.18) 20%,
+      rgba(255, 255, 255, 0) 58%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.14),
+      rgba(255, 255, 255, 0) 36%
+    );
+  mix-blend-mode: screen;
+  opacity: 0.8;
+}
+
+.apple-liquid-glass::after {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  pointer-events: none;
+  border-radius: inherit;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.28),
+    rgba(255, 255, 255, 0.04) 24%,
+    rgba(255, 255, 255, 0) 58%,
+    rgba(255, 255, 255, 0.1) 100%
+  );
+  opacity: 0.46;
+}
+
+.apple-liquid-glass:focus-visible {
+  outline: 2px solid rgba(91, 138, 255, 0.58);
+  outline-offset: 3px;
+}
+
+button.apple-liquid-glass,
+select.apple-liquid-glass,
+.location-list__item.apple-liquid-glass {
+  appearance: none;
+  -webkit-appearance: none;
+  font: inherit;
+  transition:
+    transform 160ms ease,
+    box-shadow 160ms ease,
+    border-color 160ms ease,
+    background-color 160ms ease;
+}
+
+button.apple-liquid-glass {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  border: 0;
+  padding: 0.9rem 1.1rem;
+  color: rgb(var(--glass-text));
+}
+
+button.apple-liquid-glass:hover,
+select.apple-liquid-glass:hover,
+.location-list__item.apple-liquid-glass:hover {
+  transform: translateY(-1px);
+}
+
+button.apple-liquid-glass:active,
+select.apple-liquid-glass:active,
+.location-list__item.apple-liquid-glass:active {
+  transform: translateY(0);
+}
+
 .auth-page {
   position: relative;
   min-height: 100svh;
@@ -11,10 +132,9 @@
   content: "";
   position: absolute;
   inset: 0;
-  background: url("./images/2025 - Teams Backgrounds-08.jpg") center/cover
+  background: url("/images/2025%20-%20Teams%20Backgrounds-08.jpg") center/cover
     no-repeat;
-  /* filter: blur(4px); */
-  opacity: 0.6;
+  opacity: 0.56;
   transform: scale(1.02);
   z-index: 0;
 }
@@ -29,11 +149,18 @@
   min-height: 620px;
   display: grid;
   grid-template-columns: 1.2fr 0.8fr;
-  border-radius: 24px;
   overflow: hidden;
-  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.35);
-  background: rgba(255, 255, 255, 0.78);
-  backdrop-filter: blur(16px);
+}
+
+.auth-shell.apple-liquid-glass {
+  --glass-radius: 30px;
+  --glass-blur: 34px;
+  --glass-brightness: 1.04;
+  --glass-saturation: 1.45;
+  background-color: rgba(255, 255, 255, 0.1);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.7),
+    0 30px 72px rgba(14, 23, 38, 0.34);
 }
 
 .auth-hero {
@@ -76,7 +203,6 @@
 }
 
 .auth-hero h1 {
-  /* width: 400px; */
   margin: 0;
   font-size: clamp(2.5rem, 6vw, 3.4rem);
   line-height: 0.95;
@@ -97,10 +223,17 @@
   display: grid;
   place-items: center;
   padding: 32px;
+}
+
+.auth-panel.apple-liquid-glass {
+  --glass-radius: 0;
+  --glass-blur: 26px;
+  --glass-brightness: 1.12;
+  --glass-saturation: 1.25;
   background: linear-gradient(
     180deg,
-    rgba(255, 255, 255, 0.88),
-    rgba(245, 248, 252, 0.98)
+    rgba(255, 255, 255, 0.84),
+    rgba(245, 248, 252, 0.96)
   );
 }
 
@@ -111,6 +244,8 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
+  position: relative;
+  z-index: 1;
 }
 
 .auth-card__avatar {
@@ -155,10 +290,17 @@
   gap: 12px;
   margin-bottom: 12px;
   padding: 0 14px;
-  border: 1px solid #d9e1ea;
-  border-radius: 4px;
-  background: #fff;
-  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+.auth-field.apple-liquid-glass {
+  --glass-radius: 18px;
+  --glass-blur: 18px;
+  --glass-brightness: 1.1;
+  --glass-saturation: 1.2;
+  border-color: rgba(214, 223, 233, 0.74);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.62),
+    0 4px 14px rgba(16, 24, 40, 0.08);
 }
 
 .auth-field__icon {
@@ -186,29 +328,31 @@
 .auth-button {
   width: 100%;
   margin-top: 8px;
-  border: 0;
-  border-radius: 3px;
-  /* Green gradient to match tractor/field image */
-  background: linear-gradient(180deg, #60bf3a, #2a6f3a);
   color: #fff;
   font-weight: 600;
   letter-spacing: 0.01em;
-  padding: 14px 18px;
   cursor: pointer;
-  transition:
-    transform 160ms ease,
-    box-shadow 160ms ease,
-    opacity 160ms ease;
   box-shadow: 0 10px 24px rgba(19, 32, 64, 0.22);
 }
 
-.auth-button:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 14px 26px rgba(20, 60, 30, 0.28);
-}
-
-.auth-button:active {
-  transform: translateY(0);
+.auth-button.apple-liquid-glass {
+  --glass-radius: 16px;
+  --glass-text: 255 255 255;
+  --glass-surface: 60 150 86;
+  --glass-shadow: 20 62 36;
+  --glass-blur: 20px;
+  --glass-brightness: 1;
+  --glass-saturation: 1.08;
+  background-image:
+    linear-gradient(180deg, rgba(74, 182, 88, 0.9), rgba(28, 112, 57, 0.92)),
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.68),
+      rgba(255, 255, 255, 0.22) 28%,
+      rgba(255, 255, 255, 0.06) 58%,
+      rgba(255, 255, 255, 0.18) 82%,
+      rgba(255, 255, 255, 0.46)
+    );
 }
 
 .auth-card__footer {
@@ -262,7 +406,13 @@
   min-height: 100svh;
   width: 100%;
   overflow: hidden;
-  background: #e9eef5;
+  background:
+    radial-gradient(
+      circle at top left,
+      rgba(255, 255, 255, 0.48),
+      transparent 34%
+    ),
+    linear-gradient(180deg, #edf3f9 0%, #dfe8f2 100%);
 }
 
 .map-panel {
@@ -297,14 +447,25 @@
   pointer-events: auto;
 }
 
+.top-nav-overlay .navbar-shell {
+  display: flex;
+  justify-content: flex-end;
+}
+
 .panel {
   position: absolute;
   z-index: 20;
-  background: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(6px) saturate(1.05);
-  box-shadow: 0 8px 30px rgba(6, 20, 34, 0.18);
-  border-radius: 12px;
   padding: 12px;
+}
+
+.panel.apple-liquid-glass {
+  --glass-radius: 24px;
+  --glass-blur: 30px;
+  --glass-brightness: 1.06;
+  --glass-saturation: 1.42;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.54),
+    0 18px 42px rgba(11, 18, 33, 0.18);
 }
 
 .panel-inner {
@@ -328,14 +489,17 @@
 }
 
 .save-btn {
-  display: inline-block;
   margin: 10px 0 16px 0;
-  padding: 10px 14px;
-  border-radius: 8px;
-  border: 0;
-  background: linear-gradient(180deg, #2a6f3a, #1f4f28);
-  color: #fff;
-  cursor: pointer;
+}
+
+.save-btn.apple-liquid-glass {
+  --glass-radius: 16px;
+  --glass-text: 255 255 255;
+  --glass-surface: 46 130 70;
+  --glass-shadow: 28 76 42;
+  --glass-blur: 18px;
+  --glass-brightness: 1;
+  --glass-saturation: 1.05;
 }
 
 @media (max-width: 920px) {
@@ -363,9 +527,9 @@
     position: static;
     width: 100%;
     border-radius: 0;
-    background: rgba(255, 255, 255, 0.92);
     padding: 8px 12px;
   }
+
   .top-nav-overlay {
     left: 8px;
     right: 8px;
@@ -376,14 +540,20 @@
 .map-controls {
   position: absolute;
   z-index: 1001;
-  background: rgba(255, 255, 255, 0.86);
-  backdrop-filter: blur(6px);
   padding: 8px;
-  border-radius: 10px;
-  box-shadow: 0 6px 18px rgba(6, 20, 34, 0.14);
   display: flex;
   flex-direction: column;
   gap: 6px;
+}
+
+.map-controls.apple-liquid-glass {
+  --glass-radius: 22px;
+  --glass-blur: 26px;
+  --glass-brightness: 1.08;
+  --glass-saturation: 1.35;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.48),
+    0 14px 30px rgba(8, 20, 40, 0.16);
 }
 
 .map-controls.bottom-left {
@@ -405,12 +575,10 @@
   flex-wrap: wrap;
 }
 
-.map-controls button {
+.map-controls button.apple-liquid-glass {
   padding: 6px 10px;
-  border-radius: 6px;
-  border: 0;
-  background: #fff;
-  cursor: pointer;
+  border-radius: 12px;
+  color: rgb(var(--glass-text));
   box-shadow: 0 4px 10px rgba(6, 20, 34, 0.08);
 }
 
@@ -418,5 +586,129 @@
   .map-controls {
     left: 10px;
     bottom: 10px;
+  }
+}
+
+.crop-selector__select.apple-liquid-glass {
+  width: 100%;
+  min-height: 48px;
+  margin-top: 8px;
+  padding: 0 14px;
+  border: 0;
+}
+
+.location-list {
+  margin-top: 4px;
+}
+
+.location-list ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.location-list__item.apple-liquid-glass {
+  display: block;
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 12px 14px;
+  text-align: left;
+  border-radius: 18px;
+  color: rgb(var(--glass-text));
+  cursor: pointer;
+}
+
+.navbar-shell {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 20px;
+}
+
+.navbar__button.apple-liquid-glass {
+  --glass-radius: 16px;
+  --glass-text: 17 24 39;
+  --glass-blur: 18px;
+  --glass-brightness: 1.05;
+  --glass-saturation: 1.2;
+  padding: 0.75rem 1rem;
+}
+
+.advisory-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.advisory__button.apple-liquid-glass {
+  --glass-radius: 16px;
+  --glass-blur: 18px;
+  --glass-brightness: 1.08;
+  --glass-saturation: 1.22;
+  padding: 0.75rem 1rem;
+}
+
+.advisory-card.apple-liquid-glass {
+  --glass-radius: 20px;
+  --glass-blur: 24px;
+  --glass-brightness: 1.05;
+  --glass-saturation: 1.28;
+  padding: 14px;
+}
+
+.advisory-card h4 {
+  margin-bottom: 10px;
+}
+
+.advisory-card ul {
+  margin: 10px 0 0;
+  padding-left: 18px;
+}
+
+@media (prefers-color-scheme: light) {
+  .apple-liquid-glass {
+    --glass-surface: 255 255 255;
+    --glass-highlight: 255 255 255;
+    --glass-shadow: 15 23 42;
+    --glass-text: 17 24 39;
+  }
+
+  .dashboard-shell {
+    background:
+      radial-gradient(
+        circle at top left,
+        rgba(255, 255, 255, 0.68),
+        transparent 34%
+      ),
+      linear-gradient(180deg, #edf3f9 0%, #dfe8f2 100%);
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .apple-liquid-glass {
+    --glass-surface: 13 18 28;
+    --glass-highlight: 255 255 255;
+    --glass-shadow: 0 0 0;
+    --glass-text: 245 247 250;
+    --glass-brightness: 0.92;
+    --glass-saturation: 1.4;
+  }
+
+  .auth-page::before {
+    opacity: 0.32;
+  }
+
+  .dashboard-shell {
+    background:
+      radial-gradient(
+        circle at top left,
+        rgba(255, 255, 255, 0.12),
+        transparent 34%
+      ),
+      linear-gradient(180deg, #09111c 0%, #111b2b 100%);
+  }
+
+  .auth-card__switch,
+  .auth-card__footer {
+    color: rgba(232, 237, 245, 0.74);
   }
 }

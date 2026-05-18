@@ -41,46 +41,53 @@ function Register() {
       }
     >
       <form
+        className="auth-form"
         onSubmit={(e) => {
           e.preventDefault();
           handleRegister();
         }}
       >
-        <div className="auth-field">
+        <div className="auth-field apple-liquid-glass">
           <span className="auth-field__icon" aria-hidden="true">
             ◇
           </span>
           <input
+            className="auth-field__input"
+            autoComplete="name"
             placeholder="Name"
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
         </div>
 
-        <div className="auth-field">
+        <div className="auth-field apple-liquid-glass">
           <span className="auth-field__icon" aria-hidden="true">
             @
           </span>
           <input
+            className="auth-field__input"
+            autoComplete="email"
             placeholder="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
         </div>
 
-        <div className="auth-field">
+        <div className="auth-field apple-liquid-glass">
           <span className="auth-field__icon" aria-hidden="true">
             •
           </span>
           <input
+            className="auth-field__input"
             type="password"
+            autoComplete="new-password"
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
 
-        <button type="submit" className="auth-button">
+        <button type="submit" className="auth-button apple-liquid-glass">
           Register
         </button>
       </form>

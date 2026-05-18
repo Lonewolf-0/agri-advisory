@@ -95,27 +95,35 @@ function AdvisoryPage({ lat, lon }) {
   };
 
   return (
-    <div>
+    <div className="advisory-stack">
       <h3>5 Day Farm Advisory</h3>
 
-      <button onClick={getAdvisory}>Generate Advisory</button>
+      <button
+        className="apple-liquid-glass advisory__button"
+        onClick={getAdvisory}
+      >
+        Generate Advisory
+      </button>
       {forecast.length > 0 && (
         <>
-          <button onClick={exportPDF}>Export PDF</button>
-          <button onClick={exportCSV}>Export CSV</button>
+          <button
+            className="apple-liquid-glass advisory__button"
+            onClick={exportPDF}
+          >
+            Export PDF
+          </button>
+          <button
+            className="apple-liquid-glass advisory__button"
+            onClick={exportCSV}
+          >
+            Export CSV
+          </button>
         </>
       )}
 
       <div style={{ marginTop: "20px" }}>
         {forecast.map((day, index) => (
-          <div
-            key={index}
-            style={{
-              border: "1px solid #ccc",
-              padding: "10px",
-              marginBottom: "15px",
-            }}
-          >
+          <div key={index} className="apple-liquid-glass advisory-card">
             <h4>{new Date(day.date).toDateString()}</h4>
 
             <p>Temperature: {day.weather.temperature} °C</p>
