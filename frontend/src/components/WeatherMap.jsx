@@ -180,8 +180,9 @@ function WeatherMap({ lat, lon, setLat, setLon, onSaveFarm }) {
       <div className="map-controls bottom-left apple-liquid-glass">
         <div className="map-controls-row">
           <button
-            className="apple-liquid-glass"
+            className={`apple-liquid-glass ${layer === "none" ? "is-active" : ""}`}
             onClick={() => setLayer("none")}
+            aria-pressed={layer === "none"}
           >
             <svg
               className="icon"
@@ -201,8 +202,9 @@ function WeatherMap({ lat, lon, setLat, setLon, onSaveFarm }) {
             Normal
           </button>
           <button
-            className="apple-liquid-glass"
+            className={`apple-liquid-glass ${layer === "rain" ? "is-active" : ""}`}
             onClick={() => setLayer("rain")}
+            aria-pressed={layer === "rain"}
           >
             <svg
               className="icon"
@@ -227,8 +229,9 @@ function WeatherMap({ lat, lon, setLat, setLon, onSaveFarm }) {
             Rain
           </button>
           <button
-            className="apple-liquid-glass"
+            className={`apple-liquid-glass ${layer === "temp" ? "is-active" : ""}`}
             onClick={() => setLayer("temp")}
+            aria-pressed={layer === "temp"}
           >
             <svg
               className="icon"
@@ -256,8 +259,9 @@ function WeatherMap({ lat, lon, setLat, setLon, onSaveFarm }) {
             Temperature
           </button>
           <button
-            className="apple-liquid-glass"
+            className={`apple-liquid-glass ${layer === "wind" ? "is-active" : ""}`}
             onClick={() => setLayer("wind")}
+            aria-pressed={layer === "wind"}
           >
             <svg
               className="icon"

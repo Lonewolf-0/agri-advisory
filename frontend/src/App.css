@@ -122,6 +122,23 @@ select.apple-liquid-glass:hover,
     border-color 180ms ease;
 }
 
+/* Make crop selector trigger/menu and map controls visually match list items (solid white slab) */
+.crop-selector__trigger.apple-liquid-glass,
+.crop-selector__menu.apple-liquid-glass {
+  background-image: none;
+  background-color: rgba(255, 255, 255, 0.98);
+  border-radius: 22px;
+  border: 1px solid rgba(6, 20, 34, 0.06);
+  box-shadow:
+    4px 6px 6px rgba(6, 20, 34, 0.06),
+    0 6px 16px rgba(6, 20, 34, 0.06);
+  color: #0f1720;
+}
+
+.crop-selector__menu.apple-liquid-glass {
+  padding: 10px;
+}
+
 /* Active / press state */
 .location-list__item.apple-liquid-glass:active,
 .advisory-card.apple-liquid-glass:active {
@@ -634,6 +651,7 @@ select.apple-liquid-glass:hover,
 .map-controls button.apple-liquid-glass {
   padding: 6px 10px;
   border-radius: 12px;
+  background-color: white;
   color: rgb(var(--glass-text));
   box-shadow: 0 4px 10px rgba(6, 20, 34, 0.08);
 }
@@ -752,6 +770,51 @@ button.apple-liquid-glass,
 
 .crop-selector__item.is-selected {
   font-weight: 700;
+}
+
+/* Active state for map controls */
+.map-controls .is-active {
+  /* darker, more saturated active state for higher contrast */
+  background: linear-gradient(
+    180deg,
+    rgba(16, 185, 129, 0.26),
+    rgba(4, 120, 87, 0.2)
+  );
+  border: 1px solid rgba(16, 185, 129, 0.32);
+  box-shadow:
+    0 16px 36px rgba(16, 185, 129, 0.18),
+    0 6px 18px rgba(6, 20, 34, 0.14);
+  color: #063f2f;
+  transform: translateY(-2px) scale(1.04);
+  outline: 2px solid rgba(16, 185, 129, 0.12);
+  outline-offset: 3px;
+  animation: glow-pulse 1.8s ease-in-out infinite;
+}
+
+.map-controls .is-active .icon {
+  color: #064e3b;
+  filter: drop-shadow(0 3px 8px rgba(16, 185, 129, 0.16));
+}
+
+@keyframes glow-pulse {
+  0% {
+    box-shadow:
+      0 12px 30px rgba(16, 185, 129, 0.14),
+      0 6px 18px rgba(6, 20, 34, 0.12);
+    transform: translateY(-2px) scale(1.03);
+  }
+  50% {
+    box-shadow:
+      0 20px 48px rgba(16, 185, 129, 0.26),
+      0 8px 28px rgba(6, 20, 34, 0.16);
+    transform: translateY(-2px) scale(1.06);
+  }
+  100% {
+    box-shadow:
+      0 16px 36px rgba(16, 185, 129, 0.18),
+      0 6px 18px rgba(6, 20, 34, 0.14);
+    transform: translateY(-2px) scale(1.04);
+  }
 }
 
 /* Hover/active states shared */
