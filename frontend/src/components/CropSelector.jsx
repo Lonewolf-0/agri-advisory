@@ -1,33 +1,64 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import api from "../services/api";
 
 function CropSelector() {
   const [crops, setCrops] = useState([]);
   const [selectedCrop, setSelectedCrop] = useState("");
   const [saving, setSaving] = useState(false);
+  const [open, setOpen] = useState(false);
+  const menuRef = useRef(null);
+  const triggerRef = useRef(null);
 
   useEffect(() => {
+    let mounted = true;
     async function fetchCrops() {
-      const res = await api.get("/farm/crops");
-
-      setCrops(res.data);
+      try {
+        const res = await api.get("/farm/crops");
+        if (mounted) setCrops(res.data || []);
+      } catch (e) {
+        console.error(e);
+      }
     }
 
     fetchCrops();
+    return () => {
+      mounted = false;
+    };
   }, []);
 
-  const handleCropChange = async (event) => {
-    const cropId = event.target.value;
-
-    setSelectedCrop(cropId);
-
-    if (!cropId) {
-      return;
+  useEffect(() => {
+    function onDocClick(e) {
+      if (
+        menuRef.current &&
+        !menuRef.current.contains(e.target) &&
+        triggerRef.current &&
+        !triggerRef.current.contains(e.target)
+      ) {
+        setOpen(false);
+      }
     }
+
+    function onKey(e) {
+      if (e.key === "Escape") setOpen(false);
+    }
+
+    document.addEventListener("mousedown", onDocClick);
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("mousedown", onDocClick);
+      document.removeEventListener("keydown", onKey);
+    };
+  }, []);
+
+  const handleSelect = async (crop) => {
+    if (!crop) return;
+
+    setSelectedCrop(crop.id);
+    setOpen(false);
 
     try {
       setSaving(true);
-      await api.post("/farm/select-crop", { cropId });
+      await api.post("/farm/select-crop", { cropId: crop.id });
     } catch (error) {
       console.error(error);
       alert("Failed to save crop selection");
@@ -36,24 +67,60 @@ function CropSelector() {
     }
   };
 
+  const label = crops.find((c) => c.id === selectedCrop)?.name || "Select crop";
+
   return (
-    <div>
+    <div className="crop-selector" style={{ width: "100%" }}>
       <h3>Select Crop</h3>
 
-      <select
-        className="apple-liquid-glass crop-selector__select"
-        value={selectedCrop}
-        onChange={handleCropChange}
+      <button
+        type="button"
+        ref={triggerRef}
+        className="apple-liquid-glass crop-selector__trigger"
+        aria-haspopup="listbox"
+        aria-expanded={open}
+        onClick={() => setOpen((s) => !s)}
+        onKeyDown={(e) => {
+          if (e.key === "ArrowDown" || e.key === "Enter") {
+            e.preventDefault();
+            setOpen(true);
+          }
+        }}
         disabled={saving}
       >
-        <option value="">Select crop</option>
+        <svg className="icon" viewBox="0 0 24 24" aria-hidden>
+          <path d="M4 7h16v2H4z" fill="currentColor" />
+        </svg>
+        <span style={{ flex: 1, textAlign: "left" }}>{label}</span>
+        <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden>
+          <path d="M7 10l5 5 5-5z" fill="currentColor"></path>
+        </svg>
+      </button>
 
-        {crops.map((crop) => (
-          <option key={crop.id} value={crop.id}>
-            {crop.name}
-          </option>
-        ))}
-      </select>
+      {open && (
+        <ul
+          ref={menuRef}
+          role="listbox"
+          className="apple-liquid-glass crop-selector__menu"
+          style={{ marginTop: 8 }}
+        >
+          {crops.map((crop) => (
+            <li
+              key={crop.id}
+              role="option"
+              aria-selected={selectedCrop === crop.id}
+              tabIndex={0}
+              className={`crop-selector__item ${selectedCrop === crop.id ? "is-selected" : ""}`}
+              onClick={() => handleSelect(crop)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") handleSelect(crop);
+              }}
+            >
+              {crop.name}
+            </li>
+          ))}
+        </ul>
+      )}
 
       {saving && <p>Saving crop selection...</p>}
     </div>

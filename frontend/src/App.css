@@ -709,6 +709,51 @@ button.apple-liquid-glass,
   will-change: transform, box-shadow;
 }
 
+/* Crop selector menu and items */
+.crop-selector {
+  width: 100%;
+}
+
+.crop-selector__trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 12px 16px;
+  justify-content: space-between;
+}
+
+.crop-selector__menu {
+  position: absolute;
+  z-index: 10100;
+  left: 0;
+  min-width: 100%;
+  max-width: 420px;
+  padding: 8px;
+  list-style: none;
+  margin: 0;
+}
+
+.crop-selector__item {
+  padding: 10px 14px;
+  border-radius: 12px;
+  cursor: pointer;
+  margin: 6px 0;
+}
+
+.crop-selector__item:hover,
+.crop-selector__item:focus {
+  background: linear-gradient(
+    180deg,
+    rgba(178, 243, 148, 0.18),
+    rgba(178, 243, 148, 0.06)
+  );
+}
+
+.crop-selector__item.is-selected {
+  font-weight: 700;
+}
+
 /* Hover/active states shared */
 button.apple-liquid-glass:hover,
 .navbar__button.apple-liquid-glass:hover,
