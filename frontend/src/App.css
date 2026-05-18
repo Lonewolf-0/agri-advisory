@@ -113,8 +113,38 @@ select.apple-liquid-glass:hover,
   transform: translateY(-1px);
 }
 
-button.apple-liquid-glass:active,
-select.apple-liquid-glass:active,
+/* Smooth transitions for interactive states */
+.location-list__item.apple-liquid-glass,
+.advisory-card.apple-liquid-glass {
+  transition:
+    transform 220ms cubic-bezier(0.2, 0.9, 0.2, 1),
+    box-shadow 220ms cubic-bezier(0.2, 0.9, 0.2, 1),
+    border-color 180ms ease;
+}
+
+/* Active / press state */
+.location-list__item.apple-liquid-glass:active,
+.advisory-card.apple-liquid-glass:active {
+  transform: translateY(0) scale(0.995);
+  box-shadow: 2px 4px 8px rgba(6, 20, 34, 0.06);
+}
+
+/* Click 'pop' animation (triggered via class) */
+@keyframes item-pop {
+  0% {
+    transform: translateY(0) scale(1);
+  }
+  30% {
+    transform: translateY(-8px) scale(1.03);
+  }
+  100% {
+    transform: translateY(0) scale(0.995);
+  }
+}
+
+.location-list__item.apple-liquid-glass.is-clicked {
+  animation: item-pop 260ms cubic-bezier(0.2, 0.9, 0.2, 1);
+}
 .location-list__item.apple-liquid-glass:active {
   transform: translateY(0);
 }
@@ -404,6 +434,8 @@ select.apple-liquid-glass:active,
 .dashboard-shell {
   position: relative;
   min-height: 100svh;
+  /* space to reserve at the bottom for map controls (adjust if controls grow) */
+  --map-controls-space: 160px;
   width: 100%;
   overflow: hidden;
   background:
@@ -476,7 +508,8 @@ select.apple-liquid-glass:active,
   left: 16px;
   top: 22px;
   width: min(420px, 38%);
-  max-height: calc(100svh - 160px);
+  /* subtract reserved map-controls space so the panel won't extend under controls */
+  max-height: calc(100svh - var(--map-controls-space) - 48px);
   overflow: auto;
 }
 
@@ -484,7 +517,7 @@ select.apple-liquid-glass:active,
   right: 16px;
   top: 72px;
   width: min(420px, 30%);
-  max-height: calc(100svh - 140px);
+  max-height: calc(100svh - var(--map-controls-space) - 48px);
   overflow: auto;
 }
 
@@ -502,6 +535,28 @@ select.apple-liquid-glass:active,
   --glass-saturation: 1.05;
 }
 
+/* High-contrast save button used in map popup */
+.save-btn--contrast.apple-liquid-glass {
+  --glass-radius: 14px;
+  color: #fff;
+  background-image: linear-gradient(180deg, #000000, #111111);
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow:
+    0 10px 28px rgba(0, 0, 0, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+.save-btn--contrast.apple-liquid-glass:hover {
+  background-image: linear-gradient(180deg, #111111, #222222);
+  transform: translateY(-1px);
+}
+
+.save-btn--contrast.apple-liquid-glass:active {
+  transform: translateY(0);
+}
+
 @media (max-width: 920px) {
   .left-panel,
   .right-panel {
@@ -510,7 +565,8 @@ select.apple-liquid-glass:active,
     right: 12px;
     top: auto;
     bottom: 12px;
-    max-height: 40vh;
+    /* keep panels from overlapping controls on narrower screens */
+    max-height: calc(100svh - var(--map-controls-space) - 24px);
     overflow: auto;
     transform: translateY(0);
   }
@@ -589,7 +645,7 @@ select.apple-liquid-glass:active,
   }
 }
 
-.crop-selector__select.apple-liquid-glass {
+.-selector__select.apple-liquid-glass {
   width: 100%;
   min-height: 48px;
   margin-top: 8px;
@@ -616,6 +672,88 @@ select.apple-liquid-glass:active,
   border-radius: 18px;
   color: rgb(var(--glass-text));
   cursor: pointer;
+}
+
+/* Make list items and advisory cards visually separated with a thin border
+   and increase surface opacity for better readability. Keeps glass chrome. */
+.location-list__item.apple-liquid-glass,
+.advisory-card.apple-liquid-glass {
+  /* Neubrutalism: near-opaque white slab, crisp border and offset shadow */
+  background-image: none;
+  background-color: rgba(255, 255, 255, 0.98);
+  /* match pane curves: larger radius */
+  border-radius: 22px;
+  /* softer, thinner outline */
+  border: 1px solid rgba(6, 20, 34, 0.06);
+  /* softer, smaller shadow to read as subtle depth */
+  box-shadow:
+    4px 6px 6px rgba(6, 20, 34, 0.06),
+    0 6px 16px rgba(6, 20, 34, 0.06);
+  color: #0f1720;
+}
+
+/* Shared interactive surface for clickable UI to keep visuals consistent */
+button.apple-liquid-glass,
+.navbar__button.apple-liquid-glass,
+.advisory__button.apple-liquid-glass,
+.auth-button.apple-liquid-glass,
+.map-controls button.apple-liquid-glass,
+.crop-selector__trigger,
+.location-list__item.apple-liquid-glass {
+  transition:
+    transform 220ms cubic-bezier(0.2, 0.9, 0.2, 1),
+    box-shadow 220ms cubic-bezier(0.2, 0.9, 0.2, 1),
+    border-color 180ms ease,
+    background-color 200ms ease;
+  border-radius: 22px;
+  will-change: transform, box-shadow;
+}
+
+/* Hover/active states shared */
+button.apple-liquid-glass:hover,
+.navbar__button.apple-liquid-glass:hover,
+.advisory__button.apple-liquid-glass:hover,
+.auth-button.apple-liquid-glass:hover,
+.map-controls button.apple-liquid-glass:hover,
+.crop-selector__trigger:hover,
+.location-list__item.apple-liquid-glass:hover {
+  transform: translateY(-2px);
+}
+
+button.apple-liquid-glass:active,
+.navbar__button.apple-liquid-glass:active,
+.advisory__button.apple-liquid-glass:active,
+.auth-button.apple-liquid-glass:active,
+.map-controls button.apple-liquid-glass:active,
+.crop-selector__trigger:active,
+.location-list__item.apple-liquid-glass:active {
+  transform: translateY(0) scale(0.995);
+}
+
+/* Allow JS to trigger a complete click animation across interactive elements */
+.ui-clicked,
+.is-clicked {
+  animation: item-pop 260ms cubic-bezier(0.2, 0.9, 0.2, 1);
+}
+
+/* Icon sizing inside interactive elements */
+.apple-liquid-glass .icon {
+  width: 18px;
+  height: 18px;
+  display: inline-block;
+  margin-right: 10px;
+  flex: 0 0 auto;
+  vertical-align: middle;
+}
+
+/* Slightly stronger separation on hover */
+.location-list__item.apple-liquid-glass:hover,
+.advisory-card.apple-liquid-glass:hover {
+  border-color: rgba(6, 20, 34, 0.1);
+  box-shadow:
+    6px 8px 6px rgba(6, 20, 34, 0.08),
+    0 10px 28px rgba(6, 20, 34, 0.08);
+  transform: translateY(-2px);
 }
 
 .navbar-shell {
@@ -645,6 +783,42 @@ select.apple-liquid-glass:active,
   --glass-brightness: 1.08;
   --glass-saturation: 1.22;
   padding: 0.75rem 1rem;
+}
+
+/* Primary highlight for Generate Advisory */
+.advisory__button--primary.apple-liquid-glass {
+  --glass-radius: 16px;
+  --glass-text: 255 255 255;
+  --glass-surface: 60 150 86;
+  --glass-shadow: 20 62 36;
+  --glass-blur: 20px;
+  --glass-brightness: 1;
+  --glass-saturation: 1.08;
+  background-image:
+    linear-gradient(180deg, rgba(74, 182, 88, 0.9), rgba(28, 112, 57, 0.92)),
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.68),
+      rgba(255, 255, 255, 0.22) 28%,
+      rgba(255, 255, 255, 0.06) 58%,
+      rgba(255, 255, 255, 0.18) 82%,
+      rgba(255, 255, 255, 0.46)
+    );
+  box-shadow:
+    0 12px 36px rgba(20, 62, 36, 0.12),
+    0 2px 8px rgba(74, 182, 88, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.advisory__button--primary.apple-liquid-glass:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 18px 46px rgba(20, 62, 36, 0.14),
+    0 4px 14px rgba(74, 182, 88, 0.12);
+}
+
+.advisory__button--primary.apple-liquid-glass:active {
+  transform: translateY(0);
 }
 
 .advisory-card.apple-liquid-glass {
@@ -683,32 +857,4 @@ select.apple-liquid-glass:active,
   }
 }
 
-@media (prefers-color-scheme: dark) {
-  .apple-liquid-glass {
-    --glass-surface: 13 18 28;
-    --glass-highlight: 255 255 255;
-    --glass-shadow: 0 0 0;
-    --glass-text: 245 247 250;
-    --glass-brightness: 0.92;
-    --glass-saturation: 1.4;
-  }
-
-  .auth-page::before {
-    opacity: 0.32;
-  }
-
-  .dashboard-shell {
-    background:
-      radial-gradient(
-        circle at top left,
-        rgba(255, 255, 255, 0.12),
-        transparent 34%
-      ),
-      linear-gradient(180deg, #09111c 0%, #111b2b 100%);
-  }
-
-  .auth-card__switch,
-  .auth-card__footer {
-    color: rgba(232, 237, 245, 0.74);
-  }
-}
+/* Dark-mode rules removed — app fixed to light mode */

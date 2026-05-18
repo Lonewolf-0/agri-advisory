@@ -183,24 +183,103 @@ function WeatherMap({ lat, lon, setLat, setLon, onSaveFarm }) {
             className="apple-liquid-glass"
             onClick={() => setLayer("none")}
           >
+            <svg
+              className="icon"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden
+            >
+              <circle
+                cx="12"
+                cy="12"
+                r="3"
+                stroke="currentColor"
+                strokeWidth="1.6"
+                fill="none"
+              />
+            </svg>
             Normal
           </button>
           <button
             className="apple-liquid-glass"
             onClick={() => setLayer("rain")}
           >
+            <svg
+              className="icon"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden
+            >
+              <path
+                d="M16 13a4 4 0 0 0-8 0"
+                stroke="currentColor"
+                strokeWidth="1.6"
+                fill="none"
+                strokeLinecap="round"
+              />
+              <path
+                d="M8 17l.01 0M12 17l.01 0M16 17l.01 0"
+                stroke="currentColor"
+                strokeWidth="1.6"
+                strokeLinecap="round"
+              />
+            </svg>
             Rain
           </button>
           <button
             className="apple-liquid-glass"
             onClick={() => setLayer("temp")}
           >
+            <svg
+              className="icon"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden
+            >
+              <path
+                d="M12 2v12"
+                stroke="currentColor"
+                strokeWidth="1.6"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                fill="none"
+              />
+              <circle
+                cx="12"
+                cy="18"
+                r="3"
+                stroke="currentColor"
+                strokeWidth="1.6"
+                fill="none"
+              />
+            </svg>
             Temperature
           </button>
           <button
             className="apple-liquid-glass"
             onClick={() => setLayer("wind")}
           >
+            <svg
+              className="icon"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden
+            >
+              <path
+                d="M3 12h12a3 3 0 0 0 0-6 3 3 0 0 0-3 3"
+                stroke="currentColor"
+                strokeWidth="1.6"
+                fill="none"
+                strokeLinecap="round"
+              />
+              <path
+                d="M3 18h8a2 2 0 0 0 0-4 2 2 0 0 0-2 2"
+                stroke="currentColor"
+                strokeWidth="1.6"
+                fill="none"
+                strokeLinecap="round"
+              />
+            </svg>
             Wind
           </button>
         </div>
@@ -211,6 +290,21 @@ function WeatherMap({ lat, lon, setLat, setLon, onSaveFarm }) {
             onClick={detectLocation}
             disabled={locating}
           >
+            <svg
+              className="icon"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden
+            >
+              <path
+                d="M12 2v2M12 20v2M4.93 4.93L6.34 6.34M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"
+                stroke="currentColor"
+                strokeWidth="1.4"
+                fill="none"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
             {locating ? "Locating..." : "Use Current Location"}
           </button>
         </div>
@@ -260,11 +354,15 @@ function WeatherMap({ lat, lon, setLat, setLon, onSaveFarm }) {
               <strong>Weather Details</strong>
               <p>
                 <b>Latitude: </b>
-                {popupData.position[0].toFixed(5)}
+                {Number.isFinite(popupData.position[0])
+                  ? popupData.position[0].toFixed(4)
+                  : popupData.position[0]}
               </p>
               <p>
                 <b>Longitude: </b>
-                {popupData.position[1].toFixed(5)}
+                {Number.isFinite(popupData.position[1])
+                  ? popupData.position[1].toFixed(4)
+                  : popupData.position[1]}
               </p>
 
               <p>Temperature: {popupData.weather.temperature} °C</p>
@@ -275,11 +373,31 @@ function WeatherMap({ lat, lon, setLat, setLon, onSaveFarm }) {
               {onSaveFarm && (
                 <button
                   type="button"
-                  className="apple-liquid-glass save-btn"
+                  className="apple-liquid-glass save-btn save-btn--contrast"
                   onClick={() =>
                     onSaveFarm(popupData.position[0], popupData.position[1])
                   }
                 >
+                  <svg
+                    className="icon"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                    aria-hidden
+                  >
+                    <path
+                      d="M5 4h14v16H5z"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.6"
+                      strokeLinejoin="round"
+                    />
+                    <path
+                      d="M9 9h6v6H9z"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.6"
+                    />
+                  </svg>
                   Save Farm
                 </button>
               )}
