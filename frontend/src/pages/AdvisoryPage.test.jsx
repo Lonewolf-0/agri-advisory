@@ -1,5 +1,10 @@
 import { render, screen, waitFor, fireEvent } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
+const toastMock = vi.fn();
+vi.mock("../components/ToastProvider", () => ({
+  useToast: () => ({ toast: toastMock }),
+}));
+
 import AdvisoryPage from "./AdvisoryPage";
 
 vi.mock("../services/api", () => ({
@@ -15,13 +20,15 @@ describe("AdvisoryPage", () => {
   });
 
   it("alerts when lat/lon missing", async () => {
-    window.alert = vi.fn();
+    toastMock.mockClear();
 
     render(<AdvisoryPage />);
 
     fireEvent.click(screen.getByText("Generate Advisory"));
 
-    expect(window.alert).toHaveBeenCalledWith("Please select a farm location");
+    expect(toastMock).toHaveBeenCalledWith("Please select a farm location", {
+      type: "error",
+    });
   });
 
   it("fetches and displays advisory for provided lat/lon", async () => {
