@@ -16,7 +16,7 @@ import api from "../services/api";
 describe("AdvisoryPage", () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    global.URL.createObjectURL = () => "blob:url";
+    globalThis.URL.createObjectURL = () => "blob:url";
   });
 
   it("alerts when lat/lon missing", async () => {

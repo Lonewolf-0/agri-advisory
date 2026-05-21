@@ -19,7 +19,7 @@ createRoot(document.getElementById("root")).render(
 setTimeout(() => {
   try {
     hideLoader();
-  } catch (e) {
+  } catch {
     // ignore
   }
 }, 0);
