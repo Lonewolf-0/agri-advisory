@@ -71,6 +71,13 @@ cd backend && npm install
 cd ../frontend && npm install
 ```
 
+You can prefer reproducible installs with `npm ci` when using a lockfile:
+
+```bash
+cd backend && npm ci
+cd ../frontend && npm ci
+```
+
 ## Run Locally
 
 Open two terminals.
@@ -176,5 +183,23 @@ cd frontend && npm run test:watch
 
 ## Notes
 
-- Current API has no automated tests configured.
-- Frontend `frontend/README.md` is still the default Vite template and can be replaced later if needed.
+- Automated tests are available for both `backend` and `frontend` (Vitest).
+- Frontend `frontend/README.md` currently contains the default Vite template; feel free to replace or expand it with project-specific guidance.
+
+## Useful commands
+
+- Install dependencies (reproducible): `npm ci`
+- Install dependencies (flexible): `npm install`
+- Run backend tests: `cd backend && npm test`
+- Run frontend tests: `cd frontend && npm test`
+- Run linters: `cd frontend && npm run lint` and run `npx eslint .` in `backend` if desired
+- Build frontend for production: `cd frontend && npm run build`
+- Start backend (dev): `cd backend && npm run dev`
+- Quick smoke test (start backend and curl health):
+
+```bash
+# start server in background
+cd backend && node src/server.js &
+# check root
+curl http://localhost:5000/
+```
